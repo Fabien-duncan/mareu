@@ -3,6 +3,7 @@ package com.example.mareu.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
         Meeting currentMeeting = mAllMeetings.get(position);
         holder.meetingDetailsTextView.setText(currentMeeting.detailsToString());
         holder.participantsTextView.setText(currentMeeting.participantsToString());
+        holder.meetingItemIv.setImageResource(R.drawable.baseline_circle_24);;
 
     }
 
@@ -45,11 +47,13 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
     class MeetingHolder extends RecyclerView.ViewHolder{
         private TextView meetingDetailsTextView;
         private TextView participantsTextView;
+        private ImageView meetingItemIv;
 
         public MeetingHolder(@NonNull View itemView) {
             super(itemView);
             meetingDetailsTextView = itemView.findViewById(R.id.meetings_item_tv_details);
             participantsTextView = itemView.findViewById(R.id.meetings_item_tv_participants);
+            meetingItemIv = itemView.findViewById(R.id.meetings_item_iv_avatar);
         }
     }
 }

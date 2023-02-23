@@ -15,23 +15,27 @@ import com.example.mareu.repositories.MeetingRespository;
 
 import java.util.List;
 
-public class MainActivityViewModel extends AndroidViewModel {
+public class MainActivityViewModel extends ViewModel {
     private MutableLiveData<List<Meeting>> mAllMeetings;
     private MeetingRespository mMeetingRespository;
 
-    public MainActivityViewModel(@NonNull Application application) {
+    /*/public MainActivityViewModel(@NonNull Application application) {
         super(application);
         mMeetingRespository = new MeetingRespository(application);
         mAllMeetings = mMeetingRespository.getAllMeetings();
+    }*/
+    public MainActivityViewModel(MeetingRespository meetingRespository) {
+        mMeetingRespository = meetingRespository;
+        mAllMeetings = mMeetingRespository.getAllMeetings();
     }
 
-    /*public void init(){
+    public void init(){
         if(mAllMeetings != null){
             return;
         }
-        mMeetingRespository = MeetingRespository.getInstance();
+        //mMeetingRespository = MeetingRespository.getInstance();
         mAllMeetings = mMeetingRespository.getAllMeetings();
-    }*/
+    }
     public LiveData<List<Meeting>> getAllMeetings(){
         return mAllMeetings;
     }

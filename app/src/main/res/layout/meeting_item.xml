@@ -47,6 +47,8 @@
         app:layout_constraintStart_toEndOf="@+id/meetings_item_iv_avatar"
         app:layout_constraintTop_toTopOf="@+id/meetings_item_iv_avatar"
         app:layout_constraintVertical_bias="1.0"
+        android:maxLines="1"
+        android:ellipsize="end"
         tools:text="maxime@lamzone.com, alex@lamzon.com" />
 
     <ImageView

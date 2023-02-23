@@ -19,10 +19,15 @@ public class MeetingRespository {
     private MutableLiveData<List<Room>> allRooms;
     //private static MeetingRespository instance;
 
-    public MeetingRespository(Application application)
+    /*public MeetingRespository(Application application)
+    {
+        getAllMeetings();
+    }*/
+    public MeetingRespository()
     {
         getAllMeetings();
     }
+
     /*public static MeetingRespository getInstance() {
         if(instance == null){
             instance = new MeetingRespository();
@@ -30,6 +35,8 @@ public class MeetingRespository {
         return instance;
     }*/
     public MutableLiveData<List<Meeting>> getAllMeetings(){
+        allRooms = new MutableLiveData<>(new ArrayList<>());
+        allMeetings = new MutableLiveData<>(new ArrayList<>());
         generateSomeRooms();
         generateRandomMeetings();
         return allMeetings;
@@ -55,7 +62,7 @@ public class MeetingRespository {
         allRooms.setValue(rooms);
     }
 
-    //used to fill create rooms and meetings for testing the app
+    //used to create rooms and meetings for testing the app
     private void generateSomeRooms(){
         List<Room> rooms = allRooms.getValue();
         for(int i = 101; i <= 110; i++){
