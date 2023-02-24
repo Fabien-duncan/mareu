@@ -12,10 +12,14 @@ import com.example.mareu.models.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class MeetingRespository {
     private MutableLiveData<List<Meeting>> allMeetings;
+
+
+
     private MutableLiveData<List<Room>> allRooms;
     //private static MeetingRespository instance;
 
@@ -23,9 +27,12 @@ public class MeetingRespository {
     {
         getAllMeetings();
     }*/
-    public MeetingRespository()
-    {
-        getAllMeetings();
+    private long maxId = 0;
+    public MeetingRespository() {
+        allRooms = new MutableLiveData<>(new ArrayList<>());
+        allMeetings = new MutableLiveData<>(new ArrayList<>());
+        generateSomeRooms();
+        generateRandomMeetings();
     }
 
     /*public static MeetingRespository getInstance() {
@@ -35,17 +42,36 @@ public class MeetingRespository {
         return instance;
     }*/
     public MutableLiveData<List<Meeting>> getAllMeetings(){
-        allRooms = new MutableLiveData<>(new ArrayList<>());
-        allMeetings = new MutableLiveData<>(new ArrayList<>());
-        generateSomeRooms();
-        generateRandomMeetings();
         return allMeetings;
     }
+    public MutableLiveData<List<Room>> getAllRooms() {
+        return allRooms;
+    }
+    public void deleteMeeting(long meetingId) {
+        List<Meeting> meetings = allMeetings.getValue();
 
+        if (meetings == null) return;
+
+        /*for(Meeting n : meetings){
+            if(n.getId() == meetingId)
+            {
+                meetings.remove(n);
+            }
+        }*/
+        for(int i = 0; i < meetings.size(); i++){
+            if(meetings.get(i).getId() == meetingId)
+            {
+                meetings.remove(i);
+            }
+        }
+
+        allMeetings.setValue(meetings);
+    }
     public void addMeeting(Time time, Room location, String subject, List<String> participants){
         List<Meeting> meetings = allMeetings.getValue();
         meetings.add(
             new Meeting(
+                maxId++,
                 time,
                 location,
                 subject,

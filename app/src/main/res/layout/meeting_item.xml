@@ -20,6 +20,20 @@
         tools:src="@drawable/baseline_circle_24" />
 
 
+    <ImageButton
+        android:id="@+id/meetings_item_ib_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="?selectableItemBackground"
+        android:contentDescription="delete meeting"
+        android:padding="16dp"
+        android:src="@drawable/ic_delete_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/meetings_item_tv_participants"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/meetings_item_tv_details"
+        app:layout_constraintVertical_bias="0.47" />
+
     <TextView
         android:id="@+id/meetings_item_tv_details"
         android:layout_width="0dp"
@@ -28,7 +42,7 @@
         android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/meetings_item_tv_participants"
-        app:layout_constraintEnd_toStartOf="@+id/meetings_item_iv_delete"
+        app:layout_constraintEnd_toStartOf="@+id/meetings_item_ib_delete"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/meetings_item_iv_avatar"
         app:layout_constraintTop_toTopOf="@+id/meetings_item_iv_avatar"
@@ -40,28 +54,15 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="24dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/meetings_item_iv_avatar"
-        app:layout_constraintEnd_toStartOf="@+id/meetings_item_iv_delete"
+        app:layout_constraintEnd_toStartOf="@+id/meetings_item_ib_delete"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/meetings_item_iv_avatar"
         app:layout_constraintTop_toTopOf="@+id/meetings_item_iv_avatar"
-        app:layout_constraintVertical_bias="1.0"
-        android:maxLines="1"
-        android:ellipsize="end"
+        app:layout_constraintVertical_bias="0.711"
         tools:text="maxime@lamzone.com, alex@lamzon.com" />
-
-    <ImageView
-        android:id="@+id/meetings_item_iv_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:background="?selectableItemBackground"
-        android:contentDescription="delete meeting"
-        android:padding="16dp"
-        android:src="@drawable/ic_delete_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/meetings_item_tv_participants"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/meetings_item_tv_details" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

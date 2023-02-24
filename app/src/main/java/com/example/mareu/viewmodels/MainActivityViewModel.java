@@ -45,4 +45,8 @@ public class MainActivityViewModel extends ViewModel {
     public void addRoom(int roomNumber, int maxSize){
         mMeetingRespository.addRoom(roomNumber,maxSize);
     }
+    public void deleteMeeting(long meetingId){
+        mMeetingRespository.deleteMeeting(meetingId);
+    }
+
 }

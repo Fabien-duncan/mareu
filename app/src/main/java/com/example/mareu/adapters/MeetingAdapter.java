@@ -3,6 +3,7 @@ package com.example.mareu.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,8 +16,13 @@ import com.example.mareu.models.Meeting;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingHolder> {
+public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingHolder>{
     private List<Meeting> mAllMeetings = new ArrayList<>();
+    private MeetingClickListener clickListener;
+    public MeetingAdapter(MeetingClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
     @NonNull
     @Override
     public MeetingHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -30,7 +36,19 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
         Meeting currentMeeting = mAllMeetings.get(position);
         holder.meetingDetailsTextView.setText(currentMeeting.detailsToString());
         holder.participantsTextView.setText(currentMeeting.participantsToString());
-        holder.meetingItemIv.setImageResource(R.drawable.baseline_circle_24);;
+        holder.meetingItemImageView.setImageResource(R.drawable.baseline_circle_24);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        holder.deleteImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.removeMeeting(currentMeeting.getId());
+            }
+        });
 
     }
 
@@ -47,13 +65,20 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
     class MeetingHolder extends RecyclerView.ViewHolder{
         private TextView meetingDetailsTextView;
         private TextView participantsTextView;
-        private ImageView meetingItemIv;
+        private ImageView meetingItemImageView;
+        private ImageButton deleteImageButton;
 
         public MeetingHolder(@NonNull View itemView) {
             super(itemView);
             meetingDetailsTextView = itemView.findViewById(R.id.meetings_item_tv_details);
             participantsTextView = itemView.findViewById(R.id.meetings_item_tv_participants);
-            meetingItemIv = itemView.findViewById(R.id.meetings_item_iv_avatar);
+            meetingItemImageView = itemView.findViewById(R.id.meetings_item_iv_avatar);
+            deleteImageButton = itemView.findViewById(R.id.meetings_item_ib_delete);
+
         }
+    }
+    public interface MeetingClickListener{
+        void meetingClick(long id);
+        void removeMeeting(long id);
     }
 }

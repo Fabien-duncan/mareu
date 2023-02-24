@@ -4,16 +4,18 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class Meeting {
+    private final long id;
     private Time time;
     private Room location;
     private String subject;
     private List<String> participants;
 
-    public Meeting(Time time, Room location, String subject, List<String> participants) {
+    public Meeting(long id, Time time, Room location, String subject, List<String> participants) {
         this.time = time;
         this.location = location;
         this.subject = subject;
         this.participants = participants;
+        this.id = id;
     }
 
     public Time getTime() {
@@ -56,5 +58,9 @@ public class Meeting {
             sParticipants += item + ", ";
         }
         return sParticipants;
+    }
+
+    public long getId() {
+        return id;
     }
 }

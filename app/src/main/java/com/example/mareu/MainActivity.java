@@ -17,7 +17,7 @@ import com.example.mareu.viewmodels.MainActivityViewModel;
 import java.security.Provider;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MeetingAdapter.MeetingClickListener {
     private RecyclerView mRecyclerView;
     private MainActivityViewModel mMainActivityViewModel;
     private MeetingAdapter mMeetingAdapter;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.meetings_rv);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mMeetingAdapter = new MeetingAdapter();
+        mMeetingAdapter = new MeetingAdapter(this);
         mRecyclerView.setAdapter(mMeetingAdapter);
 
         //mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
@@ -43,5 +43,16 @@ public class MainActivity extends AppCompatActivity {
                 mMeetingAdapter.setMeetings(meetings);
             }
         });
+
+    }
+
+    @Override
+    public void meetingClick(long id) {
+
+    }
+
+    @Override
+    public void removeMeeting(long id) {
+        mMainActivityViewModel.deleteMeeting(id);
     }
 }
