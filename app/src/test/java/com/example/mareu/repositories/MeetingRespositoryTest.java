@@ -38,13 +38,13 @@ public class MeetingRespositoryTest{
     }
     @Test
     public void testGetAllMeetings() {
-        assertEquals(3, meetingRepository.getAllMeetings().getValue().size());
+        assertEquals(4, meetingRepository.getAllMeetings().getValue().size());
     }
     @Test
     public void testDeleteMeeting() {
         long id = meetingRepository.getAllMeetings().getValue().get(0).getId();
         meetingRepository.deleteMeeting(id);
-        assertEquals(2, meetingRepository.getAllMeetings().getValue().size());
+        assertEquals(3, meetingRepository.getAllMeetings().getValue().size());
     }
     @Test
     public void testAddMeeting() {
@@ -54,6 +54,6 @@ public class MeetingRespositoryTest{
                 "recrutement",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
         );
-        assertEquals(4, meetingRepository.getAllMeetings().getValue().size());
+        assertEquals(5, meetingRepository.getAllMeetings().getValue().size());
     }
 }
