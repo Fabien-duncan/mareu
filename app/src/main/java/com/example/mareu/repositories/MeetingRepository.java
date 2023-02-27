@@ -1,8 +1,5 @@
 package com.example.mareu.repositories;
 
-import android.app.Application;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mareu.data.MyDatabase;
@@ -10,13 +7,10 @@ import com.example.mareu.models.Meeting;
 import com.example.mareu.models.Room;
 import com.example.mareu.models.Time;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
-public class MeetingRespository {
+public class MeetingRepository {
     private MutableLiveData<List<Meeting>> allMeetings;
 
 
@@ -24,7 +18,7 @@ public class MeetingRespository {
     private MutableLiveData<List<Room>> allRooms;
     private long maxId = 0;
     private MyDatabase myDatabase;
-    public MeetingRespository() {
+    public MeetingRepository() {
         myDatabase = new MyDatabase();
         allRooms = new MutableLiveData<>(new ArrayList<>());
         allRooms.setValue(myDatabase.getAllRooms());

@@ -10,7 +10,7 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:enabled="false"
+        android:enabled="true"
         android:text="save"
         android:layout_marginBottom="8dp"
         app:cornerRadius="16dp"
@@ -37,21 +37,36 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addMeeting_subject_textInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Réason" />
+                android:hint="Raison" />
         </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:id="@+id/addMeeting_timePicker_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="popTimePicker"
             android:text="Selection l'heure"
             android:layout_margin="8dp"/>
-        <Button
-            android:id="@+id/addMeeting_roomPicker_btn"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Selection room"
-            android:layout_margin="8dp"/>
+            android:text="sectionner la salle"
+            android:textSize="16sp"/>
+        <Spinner
+            android:id="@+id/addMeeting_roomSelection_Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addMeeting_perticipants_textInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="participants e.g person1@gmail.com, person2@gmail.com" />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

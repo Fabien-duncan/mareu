@@ -5,17 +5,15 @@ import android.content.Context;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.mareu.repositories.MeetingRespository;
+import com.example.mareu.repositories.MeetingRepository;
+import com.example.mareu.viewmodels.AddMeetingViewModel;
 import com.example.mareu.viewmodels.MainActivityViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
-        private MeetingRespository mMeetingRespository;
+        private MeetingRepository mMeetingRespository;
         private static ViewModelFactory factory;
 
         public static ViewModelFactory getInstance(Context context) {
@@ -30,7 +28,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
 
         private ViewModelFactory(Context context) {
-            this.mMeetingRespository = new MeetingRespository();
+            this.mMeetingRespository = new MeetingRepository();
         }
 
         @Override
@@ -38,6 +36,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         public <T extends ViewModel>  T create(Class<T> modelClass) {
             if (modelClass.isAssignableFrom(MainActivityViewModel.class)) {
                 return (T) new MainActivityViewModel(mMeetingRespository);
+            }else if (modelClass.isAssignableFrom(AddMeetingViewModel.class)) {
+                return (T) new AddMeetingViewModel(mMeetingRespository);
             }
             throw new IllegalArgumentException("Unknown ViewModel class");
         }

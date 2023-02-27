@@ -1,5 +1,7 @@
 package com.example.mareu.models;
 
+import java.util.Locale;
+
 public class Time {
     private int hours;
     private int minutes;
@@ -27,9 +29,6 @@ public class Time {
 
     @Override
     public String toString() {
-        String mins;
-        if(minutes < 10) mins = "0" + minutes;
-        else mins = String.valueOf(minutes);
-        return hours + "hr" + mins;
+        return String.format(Locale.getDefault(),"%02dh%02d",hours, minutes);
     }
 }
