@@ -49,4 +49,34 @@ public class MeetingRespositoryTest{
         );
         assertEquals(5, meetingRepository.getAllMeetings().getValue().size());
     }
+    @Test
+    public void testFilterByHour(){
+        meetingRepository.addMeeting(
+                new Time(15,0),
+                new Room(105,6),
+                "recrutement",
+                Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
+        );
+        assertEquals(2,meetingRepository.getFilteredMeetings(15).getValue().size());
+    }
+    @Test
+    public void testFilterByHourAndMinutes(){
+        meetingRepository.addMeeting(
+                new Time(15,45),
+                new Room(105,6),
+                "recrutement",
+                Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
+        );
+        assertEquals(2,meetingRepository.getFilteredMeetings(15,45).getValue().size());
+    }
+    @Test
+    public void testFilterByRoom(){
+        meetingRepository.addMeeting(
+                new Time(15,45),
+                new Room(105,6),
+                "recrutement",
+                Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
+        );
+        assertEquals(2,meetingRepository.getFilteredMeetings(new Room(105,6)).getValue().size());
+    }
 }

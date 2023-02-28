@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.mareu.R;
 import com.example.mareu.injection.ViewModelFactory;
@@ -30,6 +31,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     private Spinner roomSelectionSpinner;
     private int hours, minutes;
     private AddMeetingViewModel mAddMeetingViewModel;
+    private boolean isTimeSelected = false;
     public static Intent navigate(Context context) {
         return new Intent(context, AddMeetingActivity.class);
     }
@@ -61,6 +63,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                 hours = selectHours;
                 minutes = selectMins;
                 timeButton.setText(String.format(Locale.getDefault(),"%02d:%02d",hours, minutes));
+                isTimeSelected = true;
             }
         };
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,onTimeSetListener,hours,minutes,true);
@@ -77,13 +80,19 @@ public class AddMeetingActivity extends AppCompatActivity {
         addMeetingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAddMeetingViewModel.onAddButtonClicked(
-                        new Time(hours,minutes),
-                        roomSelectionSpinner.getSelectedItemPosition(),
-                        subjectTextInput.getText().toString(),
-                        participantsTextInput.getText().toString()
-                );
-                finish();
+                String subject = subjectTextInput.getText().toString();
+                String participants = participantsTextInput.getText().toString();
+                //checks if fields are not empty
+                if(subject.isEmpty()||participants.isEmpty()||!isTimeSelected) Toast.makeText(getApplicationContext(), "missing fiels", Toast.LENGTH_LONG).show();
+                else {
+                    mAddMeetingViewModel.onAddButtonClicked(
+                            new Time(hours, minutes),
+                            roomSelectionSpinner.getSelectedItemPosition(),
+                            subject,
+                            participants
+                    );
+                    finish();
+                }
             }
         });
     }

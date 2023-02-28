@@ -35,6 +35,45 @@ public class MeetingRepository {
     public MutableLiveData<List<Meeting>> getAllMeetings(){
         return allMeetings;
     }
+    //fliters by hour only
+    public MutableLiveData<List<Meeting>> getFilteredMeetings(int hour){
+        MutableLiveData<List<Meeting>> filteredMeeting = new MutableLiveData<>(new ArrayList<>());;
+        List<Meeting> filteredMeetingList = new ArrayList<>();
+        List<Meeting> allMeetingList = allMeetings.getValue();
+        for(int i =0; i < allMeetingList.size(); i++){
+            if(allMeetingList.get(i).getTime().getHours() == hour){
+                filteredMeetingList.add(allMeetingList.get(i));
+            }
+        }
+        filteredMeeting.setValue(filteredMeetingList);
+        return filteredMeeting;
+    }
+    //filters by exact time
+    public MutableLiveData<List<Meeting>> getFilteredMeetings(int hour, int minutes){
+        MutableLiveData<List<Meeting>> filteredMeeting = new MutableLiveData<>(new ArrayList<>());;
+        List<Meeting> filteredMeetingList = new ArrayList<>();
+        List<Meeting> allMeetingList = allMeetings.getValue();
+        for(int i =0; i < allMeetingList.size(); i++){
+            if(allMeetingList.get(i).getTime().getHours() == hour && allMeetingList.get(i).getTime().getMinutes() == minutes){
+                filteredMeetingList.add(allMeetingList.get(i));
+            }
+        }
+        filteredMeeting.setValue(filteredMeetingList);
+        return filteredMeeting;
+    }
+    //filters by room
+    public MutableLiveData<List<Meeting>> getFilteredMeetings(Room room){
+        MutableLiveData<List<Meeting>> filteredMeeting = new MutableLiveData<>(new ArrayList<>());;
+        List<Meeting> filteredMeetingList = new ArrayList<>();
+        List<Meeting> allMeetingList = allMeetings.getValue();
+        for(int i =0; i < allMeetingList.size(); i++){
+            if(allMeetingList.get(i).getLocation().getRoomNumber() == room.getRoomNumber()){
+                filteredMeetingList.add(allMeetingList.get(i));
+            }
+        }
+        filteredMeeting.setValue(filteredMeetingList);
+        return filteredMeeting;
+    }
     public MutableLiveData<List<Room>> getAllRooms() {
         return allRooms;
     }
