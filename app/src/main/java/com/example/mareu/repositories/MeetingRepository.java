@@ -38,6 +38,14 @@ public class MeetingRepository {
     public MutableLiveData<List<Room>> getAllRooms() {
         return allRooms;
     }
+    public String[] getRoomNumbers(){
+        List<Room> rooms = allRooms.getValue();
+        String[] roomNumbers = new String[rooms.size()];
+        for(int i = 0; i < rooms.size(); i++){
+            roomNumbers[i]=Integer.toString(rooms.get(i).getRoomNumber());
+        }
+        return roomNumbers;
+    }
     public void deleteMeeting(long meetingId) {
 
         myDatabase.deleteMeeting(meetingId);

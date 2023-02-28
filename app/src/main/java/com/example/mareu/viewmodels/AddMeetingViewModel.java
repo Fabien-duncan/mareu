@@ -1,5 +1,6 @@
 package com.example.mareu.viewmodels;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -8,6 +9,8 @@ import com.example.mareu.models.Room;
 import com.example.mareu.models.Time;
 import com.example.mareu.repositories.MeetingRepository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AddMeetingViewModel extends ViewModel {
@@ -19,7 +22,23 @@ public class AddMeetingViewModel extends ViewModel {
         mMeetingRepository = meetingRepository;
     }
 
-    public void onAddButtonClicked(Time time, Room location, String subject, List<String> participants){
-        mMeetingRepository.addMeeting(time,location,subject,participants);
+    public LiveData<List<Meeting>> getAllMeetings(){
+        return mMeetingRepository.getAllMeetings();
+    }
+    public LiveData<List<Room>> getAllRooms(){
+        return mMeetingRepository.getAllRooms();
+    }
+    public void onAddButtonClicked(Time time, int location, String subject, String participants){
+        List<Room> rooms = mMeetingRepository.getAllRooms().getValue();
+        List<String> participantsList = Arrays.asList(participants.split(",", -1));
+        /*for(int i = 0; i < rooms.size(); i++){
+            if(Integer.parseInt(location) == rooms.get(i).getRoomNumber()){
+                mMeetingRepository.addMeeting(time,rooms.get(i),subject,participants);
+            }
+        }*/
+        mMeetingRepository.addMeeting(time,rooms.get(location),subject,participantsList);
+    }
+    public String[] getRoomNumbers(){
+        return mMeetingRepository.getRoomNumbers();
     }
 }
