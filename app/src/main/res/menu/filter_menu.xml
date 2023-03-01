@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/menu_options"
+        android:icon="@drawable/ic_filter_list_24"
+        android:title="filter"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/menu_filter"
+                android:title="filtrer"
+                app:showAsAction="never"/>
+            <item android:id="@+id/menu_sort"
+                android:title="trier"
+                app:showAsAction="never">
+                <menu>
+                    <item android:id="@+id/menu_sort_by_time"
+                        android:title="par heures"/>
+                    <item android:id="@+id/menu_sort_by_room"
+                        android:title="par salles"/>
+                </menu>
+
+            </item>
+        </menu>
+    </item>
+</menu>

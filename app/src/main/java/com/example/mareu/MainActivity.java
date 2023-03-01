@@ -1,5 +1,6 @@
 package com.example.mareu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -7,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.example.mareu.adapters.MeetingAdapter;
 import com.example.mareu.injection.ViewModelFactory;
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
     private FloatingActionButton mAddMeetingFloatingButton;
     private MainActivityViewModel mMainActivityViewModel;
     private MeetingAdapter mMeetingAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,18 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
 
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.filter_menu, menu);
+        return true;
+    }
+    /*@Override
+    public boolean onCreatePanelMenu(int featureId, @NonNull Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.filter_menu, menu);
+        return true;
+    }*/
 
     @Override
     public void meetingClick(long id) {
