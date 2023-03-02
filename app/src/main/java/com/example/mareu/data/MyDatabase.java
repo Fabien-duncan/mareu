@@ -81,7 +81,7 @@ public class MyDatabase {
                 Arrays.asList("person2@gmail.com", "person3@gmail.com")
         );
         addMeeting(
-                new Time(18,0),
+                new Time(15,0),
                 mAllRooms.get(4),
                 "recrutment",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")

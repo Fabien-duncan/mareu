@@ -9,13 +9,26 @@
         android:padding="10dp"
         android:orientation="vertical">
 
-        <EditText
+        <TextView
             android:id="@+id/filter_time_hours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="heures"/>
-        <EditText
+            android:hint="heures:" />
+        <NumberPicker
+            android:id="@+id/filter_hours_number_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <CheckBox android:id="@+id/filter_minutes_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="inclure les minutes" />
+        <TextView
             android:id="@+id/filter_time_minutes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="minutes:" />
+        <NumberPicker
+            android:id="@+id/filter_minutes_number_picker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="minutes"/>

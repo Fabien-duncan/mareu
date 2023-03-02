@@ -31,6 +31,7 @@ public class MainActivityViewModel extends ViewModel {
         }
         //mMeetingRespository = MeetingRespository.getInstance();
         mAllMeetings = mMeetingRepository.getAllMeetings();
+        //mAllMeetings = mMeetingRepository.getFilteredMeetings(15);
     }
     public LiveData<List<Meeting>> getAllMeetings(){
         return mAllMeetings;
@@ -40,6 +41,29 @@ public class MainActivityViewModel extends ViewModel {
     }
     public void addRoom(int roomNumber, int maxSize){
         mMeetingRepository.addRoom(roomNumber,maxSize);
+    }
+    public void filterMeetings(String hours, String minutes) {
+        clearFiltersSorts();
+        if(minutes.isEmpty()) mAllMeetings.setValue(mMeetingRepository.getFilteredMeetings(Integer.parseInt(hours)).getValue());
+        else  mAllMeetings.setValue(mMeetingRepository.getFilteredMeetings(Integer.parseInt(hours), Integer.parseInt(minutes)).getValue());
+    }public void filterMeetings(int hours, int minutes) {
+        clearFiltersSorts();
+        mAllMeetings.setValue(mMeetingRepository.getFilteredMeetings(hours,minutes).getValue());
+    }
+    public void filterMeetings(int hours) {
+        clearFiltersSorts();
+        mAllMeetings.setValue(mMeetingRepository.getFilteredMeetings(hours).getValue());
+    }
+    /*public int timeValidation(String hours, String minutes)
+    {
+        int status;
+        if(hours.isEmpty())return 0;
+        else{
+            if(Integer.parseInt(hours) < 0)
+        }
+    }*/
+    public void clearFiltersSorts(){
+        mAllMeetings.setValue(mMeetingRepository.getAllMeetings().getValue());
     }
     public void deleteMeeting(long meetingId){
         mMeetingRepository.deleteMeeting(meetingId);

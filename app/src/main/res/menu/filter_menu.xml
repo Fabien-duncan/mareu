@@ -6,6 +6,9 @@
         android:title="filter"
         app:showAsAction="always">
         <menu>
+            <item android:id="@+id/menu_cancel_filters"
+                android:title="suprimer filtre/tri"
+                app:showAsAction="never"/>
             <item android:id="@+id/menu_filter"
                 android:title="filtrer"
                 app:showAsAction="never"/>

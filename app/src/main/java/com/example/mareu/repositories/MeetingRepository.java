@@ -33,9 +33,11 @@ public class MeetingRepository {
         return instance;
     }*/
     public MutableLiveData<List<Meeting>> getAllMeetings(){
+        allMeetings.setValue(myDatabase.getAllMeetings());
+        System.out.println("getting all meetings and there are " + allMeetings.getValue().size());
         return allMeetings;
     }
-    //fliters by hour only
+    //filters by hour only
     public MutableLiveData<List<Meeting>> getFilteredMeetings(int hour){
         MutableLiveData<List<Meeting>> filteredMeeting = new MutableLiveData<>(new ArrayList<>());;
         List<Meeting> filteredMeetingList = new ArrayList<>();

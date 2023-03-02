@@ -57,7 +57,18 @@ public class MeetingRespositoryTest{
                 "recrutement",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
         );
-        assertEquals(2,meetingRepository.getFilteredMeetings(15).getValue().size());
+        assertEquals(3,meetingRepository.getFilteredMeetings(15).getValue().size());
+    }
+    @Test
+    public void testFilterByHour_twice(){
+        meetingRepository.addMeeting(
+                new Time(15,0),
+                new Room(105,6),
+                "recrutement",
+                Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
+        );
+        assertEquals(3,meetingRepository.getFilteredMeetings(15).getValue().size());
+        assertEquals(1,meetingRepository.getFilteredMeetings(14).getValue().size());
     }
     @Test
     public void testFilterByHourAndMinutes(){
