@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
     private FloatingActionButton mAddMeetingFloatingButton;
     private MainActivityViewModel mMainActivityViewModel;
     private MeetingAdapter mMeetingAdapter;
-
     private AlertDialog mTimePickerAlertDialog;
     private AlertDialog mRoomPickerAlertDialog;
     @Override
@@ -80,19 +79,19 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
             case R.id.menu_cancel_filters:
                 mMainActivityViewModel.clearSorting();
                 mMainActivityViewModel.clearFiltersSorts();
-                Toast.makeText(MainActivity.this, "cancel", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "cancel", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.menu_filter_time:
                 mTimePickerAlertDialog.show();
                 //popTimePicker();
-                Toast.makeText(MainActivity.this, "filter by time", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "filter by time", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.menu_filter_room:
-                Toast.makeText(MainActivity.this, "filter by room", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "filter by room", Toast.LENGTH_SHORT).show();
                 mRoomPickerAlertDialog.show();
                 return true;
             case R.id.menu_sort_by_time:
-                Toast.makeText(MainActivity.this, "sort by time", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "sort by time", Toast.LENGTH_SHORT).show();
                 mMainActivityViewModel.sortMeetingsTime();
                 return true;
             case R.id.menu_sort_by_room:
@@ -113,8 +112,6 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
         builder.setTitle("Choisir l'heure a filtrer");
         View view = getLayoutInflater().inflate(R.layout.time_filter_dialog, null);
         EditText eHours, eMinutes;
-        //eHours = view.findViewById(R.id.filter_time_hours);
-        //eMinutes = view.findViewById(R.id.filter_time_minutes);
         Button submitTimeFilter = view.findViewById(R.id.filter_time_submit);
         NumberPicker hoursNumberPicker = view.findViewById(R.id.filter_hours_number_picker);
         NumberPicker minutesNumberPicker = view.findViewById(R.id.filter_minutes_number_picker);
@@ -126,9 +123,7 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
         submitTimeFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "searching for " + hoursNumberPicker.getValue() + ":" + minutesNumberPicker.getValue(), Toast.LENGTH_SHORT).show();
-
-                //mMainActivityViewModel.filterMeetings(eHours.getText().toString(),eMinutes.getText().toString());
+                //Toast.makeText(MainActivity.this, "searching for " + hoursNumberPicker.getValue() + ":" + minutesNumberPicker.getValue(), Toast.LENGTH_SHORT).show();
                 if(minutesCheckBox.isChecked())mMainActivityViewModel.filterMeetings(hoursNumberPicker.getValue(),minutesNumberPicker.getValue());
                 else mMainActivityViewModel.filterMeetings(hoursNumberPicker.getValue());
                 mTimePickerAlertDialog.dismiss();
