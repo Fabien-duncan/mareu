@@ -93,6 +93,20 @@ public class MeetingRepository {
         sortedMeeting.setValue(allMeetingList);
         return sortedMeeting;
     }
+    public MutableLiveData<List<Meeting>> getSortedMeetingsTime(){
+        MutableLiveData<List<Meeting>> sortedMeeting = new MutableLiveData<>(new ArrayList<>());;
+        List<Meeting> allMeetingList = allMeetings.getValue();
+        allMeetingList.sort(new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting meeting, Meeting t1) {
+                int comparison;
+                comparison = meeting.getTime().toString().compareTo(t1.getTime().toString());
+                return comparison;
+            }
+        });
+        sortedMeeting.setValue(allMeetingList);
+        return sortedMeeting;
+    }
     public MutableLiveData<List<Meeting>> getResetSorting(){
         MutableLiveData<List<Meeting>> sortedMeeting = new MutableLiveData<>(new ArrayList<>());;
         List<Meeting> allMeetingList = allMeetings.getValue();

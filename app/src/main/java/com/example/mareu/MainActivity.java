@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
                 return true;
             case R.id.menu_sort_by_time:
                 Toast.makeText(MainActivity.this, "sort by time", Toast.LENGTH_SHORT).show();
+                mMainActivityViewModel.sortMeetingsTime();
                 return true;
             case R.id.menu_sort_by_room:
                 Toast.makeText(MainActivity.this, "sort by room", Toast.LENGTH_SHORT).show();

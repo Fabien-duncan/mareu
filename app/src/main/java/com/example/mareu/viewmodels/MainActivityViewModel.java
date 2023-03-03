@@ -61,6 +61,9 @@ public class MainActivityViewModel extends ViewModel {
     public void sortMeetingsRoom(){
         mAllMeetings.setValue(mMeetingRepository.getSortedMeetingsRoom().getValue());
     }
+    public void sortMeetingsTime(){
+        mAllMeetings.setValue(mMeetingRepository.getSortedMeetingsTime().getValue());
+    }
     /*public int timeValidation(String hours, String minutes)
     {
         int status;
