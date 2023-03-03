@@ -71,12 +71,6 @@ public class AddMeetingActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
     private void bindAddButton(){
-        /*addMeetingButton.setOnClickListener(v -> mAddMeetingViewModel.onAddButtonClicked(
-                new Time(hours,minutes),
-                roomSelectionSpinner.getSelectedItemPosition(),
-                subjectTextInput.getText().toString(),
-                participantsTextInput.getText().toString()
-        ));*/
         addMeetingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

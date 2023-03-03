@@ -8,18 +8,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.TextView;
-import android.widget.TimePicker;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mareu.adapters.MeetingAdapter;
@@ -30,7 +29,6 @@ import com.example.mareu.viewmodels.MainActivityViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements MeetingAdapter.MeetingClickListener {
     private RecyclerView mRecyclerView;
@@ -38,12 +36,8 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
     private MainActivityViewModel mMainActivityViewModel;
     private MeetingAdapter mMeetingAdapter;
 
-    /*private TextView mHoursTextView, mMinutesTextView;
-    private Button mSubmitButton;*/
-    private AlertDialog mAlertDialog;
-
-    private int hours;
-    private int minutes;
+    private AlertDialog mTimePickerAlertDialog;
+    private AlertDialog mRoomPickerAlertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +51,12 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
         mMeetingAdapter = new MeetingAdapter(this);
         mRecyclerView.setAdapter(mMeetingAdapter);
 
-        createTimeFilterPicker();
-
         mMainActivityViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this)).get(MainActivityViewModel.class);
         mMainActivityViewModel.init();
         mAddMeetingFloatingButton.setOnClickListener(v -> startActivity(AddMeetingActivity.navigate(this)));
+
+        createTimeFilterPicker();
+        createRoomFilterPicker();
         mMainActivityViewModel.getAllMeetings().observe(this, new Observer<List<Meeting>>() {
             @Override
             public void onChanged(List<Meeting> meetings) {
@@ -83,19 +78,25 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_cancel_filters:
+                mMainActivityViewModel.clearSorting();
                 mMainActivityViewModel.clearFiltersSorts();
                 Toast.makeText(MainActivity.this, "cancel", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.menu_filter:
-                mAlertDialog.show();
+            case R.id.menu_filter_time:
+                mTimePickerAlertDialog.show();
                 //popTimePicker();
-                Toast.makeText(MainActivity.this, "filter", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "filter by time", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.menu_sort_by_room:
-                Toast.makeText(MainActivity.this, "sort by room", Toast.LENGTH_SHORT).show();
+            case R.id.menu_filter_room:
+                Toast.makeText(MainActivity.this, "filter by room", Toast.LENGTH_SHORT).show();
+                mRoomPickerAlertDialog.show();
                 return true;
             case R.id.menu_sort_by_time:
                 Toast.makeText(MainActivity.this, "sort by time", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menu_sort_by_room:
+                Toast.makeText(MainActivity.this, "sort by room", Toast.LENGTH_SHORT).show();
+                mMainActivityViewModel.sortMeetingsRoom();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
     }
     public void createTimeFilterPicker(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("enter filter");
+        builder.setTitle("Choisir l'heure a filtrer");
         View view = getLayoutInflater().inflate(R.layout.time_filter_dialog, null);
         EditText eHours, eMinutes;
         //eHours = view.findViewById(R.id.filter_time_hours);
@@ -129,11 +130,32 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
                 //mMainActivityViewModel.filterMeetings(eHours.getText().toString(),eMinutes.getText().toString());
                 if(minutesCheckBox.isChecked())mMainActivityViewModel.filterMeetings(hoursNumberPicker.getValue(),minutesNumberPicker.getValue());
                 else mMainActivityViewModel.filterMeetings(hoursNumberPicker.getValue());
-                mAlertDialog.dismiss();
+                mTimePickerAlertDialog.dismiss();
             }
         });
         builder.setView(view);
-        mAlertDialog = builder.create();
+        mTimePickerAlertDialog = builder.create();
+    }
+    public void createRoomFilterPicker(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Choisir la Salle a filtrer");
+        View view = getLayoutInflater().inflate(R.layout.room_filter_dialog, null);
+        Button submitRoomFilter = view.findViewById(R.id.filter_room_submit);
+        Spinner roomSelectionSpinner= view.findViewById(R.id.filter_room_spinner);
+        String[] roomArray = mMainActivityViewModel.getRoomNumbers();
+        ArrayAdapter roomSelectionAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, roomArray);
+        roomSelectionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        roomSelectionSpinner.setAdapter(roomSelectionAdapter);
+        submitRoomFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "searching for Room " + roomArray[roomSelectionSpinner.getSelectedItemPosition()], Toast.LENGTH_SHORT).show();
+                mMainActivityViewModel.filterMeetings(roomArray[roomSelectionSpinner.getSelectedItemPosition()]);
+                mRoomPickerAlertDialog.dismiss();
+            }
+        });
+        builder.setView(view);
+        mRoomPickerAlertDialog = builder.create();
     }
 
 

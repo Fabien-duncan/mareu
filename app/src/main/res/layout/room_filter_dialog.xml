@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/filter_room_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="room:" />
+        <Spinner
+            android:id="@+id/filter_room_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"/>
+        <Button
+            android:id="@+id/filter_room_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="Valider"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+</RelativeLayout>

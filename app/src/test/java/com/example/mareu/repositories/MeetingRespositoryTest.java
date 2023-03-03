@@ -88,6 +88,6 @@ public class MeetingRespositoryTest{
                 "recrutement",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
         );
-        assertEquals(2,meetingRepository.getFilteredMeetings(new Room(105,6)).getValue().size());
+        assertEquals(2,meetingRepository.getFilteredMeetings("105").getValue().size());
     }
 }

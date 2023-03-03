@@ -70,25 +70,25 @@ public class MyDatabase {
     private void generateRandomMeetings(){
         addMeeting(
                 new Time(14,30),
-                mAllRooms.get(1),
+                mAllRooms.get(8),
                 "future changes",
                 Arrays.asList("John.do@gmail.com", "person2@gmail.com", "person3@gmail.com")
         );
         addMeeting(
                 new Time(9,15),
-                mAllRooms.get(7),
+                mAllRooms.get(8),
                 "investements",
                 Arrays.asList("person2@gmail.com", "person3@gmail.com")
         );
         addMeeting(
                 new Time(15,0),
-                mAllRooms.get(4),
+                mAllRooms.get(6),
                 "recrutment",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
         );
         addMeeting(
                 new Time(15,45),
-                mAllRooms.get(6),
+                mAllRooms.get(4),
                 "redundancy",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com", "person7@gmail.com")
         );

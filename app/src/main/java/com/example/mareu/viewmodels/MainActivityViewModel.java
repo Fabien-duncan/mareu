@@ -54,6 +54,13 @@ public class MainActivityViewModel extends ViewModel {
         clearFiltersSorts();
         mAllMeetings.setValue(mMeetingRepository.getFilteredMeetings(hours).getValue());
     }
+    public void filterMeetings(String roomName) {
+        clearFiltersSorts();
+        mAllMeetings.setValue(mMeetingRepository.getFilteredMeetings(roomName).getValue());
+    }
+    public void sortMeetingsRoom(){
+        mAllMeetings.setValue(mMeetingRepository.getSortedMeetingsRoom().getValue());
+    }
     /*public int timeValidation(String hours, String minutes)
     {
         int status;
@@ -65,8 +72,14 @@ public class MainActivityViewModel extends ViewModel {
     public void clearFiltersSorts(){
         mAllMeetings.setValue(mMeetingRepository.getAllMeetings().getValue());
     }
+    public void clearSorting(){
+        mMeetingRepository.getResetSorting();
+    }
     public void deleteMeeting(long meetingId){
         mMeetingRepository.deleteMeeting(meetingId);
     }
 
+    public String[] getRoomNumbers() {
+        return mMeetingRepository.getRoomNumbers();
+    }
 }

@@ -1,5 +1,7 @@
 package com.example.mareu.repositories;
 
+import android.os.Build;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mareu.data.MyDatabase;
@@ -8,6 +10,7 @@ import com.example.mareu.models.Room;
 import com.example.mareu.models.Time;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class MeetingRepository {
@@ -64,17 +67,45 @@ public class MeetingRepository {
         return filteredMeeting;
     }
     //filters by room
-    public MutableLiveData<List<Meeting>> getFilteredMeetings(Room room){
+    public MutableLiveData<List<Meeting>> getFilteredMeetings(String room){
         MutableLiveData<List<Meeting>> filteredMeeting = new MutableLiveData<>(new ArrayList<>());;
         List<Meeting> filteredMeetingList = new ArrayList<>();
         List<Meeting> allMeetingList = allMeetings.getValue();
         for(int i =0; i < allMeetingList.size(); i++){
-            if(allMeetingList.get(i).getLocation().getRoomNumber() == room.getRoomNumber()){
+            if(allMeetingList.get(i).getLocation().getRoomNumber() == Integer.parseInt(room)){
                 filteredMeetingList.add(allMeetingList.get(i));
             }
         }
         filteredMeeting.setValue(filteredMeetingList);
         return filteredMeeting;
+    }
+    public MutableLiveData<List<Meeting>> getSortedMeetingsRoom(){
+        MutableLiveData<List<Meeting>> sortedMeeting = new MutableLiveData<>(new ArrayList<>());;
+        List<Meeting> allMeetingList = allMeetings.getValue();
+        allMeetingList.sort(new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting meeting, Meeting t1) {
+                int comparison;
+                comparison = meeting.getLocation().getRoomNumber()-t1.getLocation().getRoomNumber();
+                return comparison;
+            }
+        });
+        sortedMeeting.setValue(allMeetingList);
+        return sortedMeeting;
+    }
+    public MutableLiveData<List<Meeting>> getResetSorting(){
+        MutableLiveData<List<Meeting>> sortedMeeting = new MutableLiveData<>(new ArrayList<>());;
+        List<Meeting> allMeetingList = allMeetings.getValue();
+        allMeetingList.sort(new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting meeting, Meeting t1) {
+                int comparison;
+                comparison = (int)(meeting.getId()-t1.getId());
+                return comparison;
+            }
+        });
+        sortedMeeting.setValue(allMeetingList);
+        return sortedMeeting;
     }
     public MutableLiveData<List<Room>> getAllRooms() {
         return allRooms;

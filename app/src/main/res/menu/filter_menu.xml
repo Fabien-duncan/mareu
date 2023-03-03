@@ -10,8 +10,15 @@
                 android:title="suprimer filtre/tri"
                 app:showAsAction="never"/>
             <item android:id="@+id/menu_filter"
-                android:title="filtrer"
-                app:showAsAction="never"/>
+                android:title="filtrer" >
+                <menu>
+                    <item android:id="@+id/menu_filter_time"
+                        android:title="par heures"/>
+                    <item android:id="@+id/menu_filter_room"
+                        android:title="par salles"/>
+                </menu>
+            </item>
+
             <item android:id="@+id/menu_sort"
                 android:title="trier"
                 app:showAsAction="never">
