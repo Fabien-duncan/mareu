@@ -1,30 +1,46 @@
 package com.example.mareu.models;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 public class Meeting {
     private final long id;
     private Time time;
+
+    private LocalDateTime date;
     private Room location;
     private String subject;
     private List<String> participants;
 
-    public Meeting(long id, Time time, Room location, String subject, List<String> participants) {
-        this.time = time;
+    public Meeting(long id, LocalDateTime date, Room location, String subject, List<String> participants) {
+        this.date = date;
         this.location = location;
         this.subject = subject;
         this.participants = participants;
         this.id = id;
+
+    }
+    public LocalDateTime getDate() {
+        return date;
     }
 
-    public Time getTime() {
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+    /*public Time getTime() {
         return time;
     }
 
     public void setTime(Time time) {
         this.time = time;
-    }
+    }*/
 
     public Room getLocation() {
         return location;
@@ -50,7 +66,8 @@ public class Meeting {
         this.participants = participants;
     }
     public String detailsToString(){
-        return location.getRoomNumber() + " - " + time.toString() + " - " + subject;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
+        return location.getRoomNumber() + " - " + date.format(formatter) + " - " + subject;
     }
     public String participantsToString(){
         String sParticipants = "";

@@ -9,6 +9,7 @@ import com.example.mareu.models.Room;
 import com.example.mareu.models.Time;
 import com.example.mareu.repositories.MeetingRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MainActivityViewModel extends ViewModel {
@@ -36,17 +37,22 @@ public class MainActivityViewModel extends ViewModel {
     public LiveData<List<Meeting>> getAllMeetings(){
         return mAllMeetings;
     }
-    public void addMeeting(Time time, Room location, String subject, List<String> participants){
-        mMeetingRepository.addMeeting(time, location, subject, participants);
+    public void addMeeting(LocalDateTime date, Room location, String subject, List<String> participants){
+        mMeetingRepository.addMeeting(date, location, subject, participants);
     }
     public void addRoom(int roomNumber, int maxSize){
         mMeetingRepository.addRoom(roomNumber,maxSize);
     }
-    public void filterMeetings(String hours, String minutes) {
+    /*public void filterMeetings(String hours, String minutes) {
         clearFiltersSorts();
         if(minutes.isEmpty()) mAllMeetings.setValue(mMeetingRepository.getFilteredMeetings(Integer.parseInt(hours)).getValue());
         else  mAllMeetings.setValue(mMeetingRepository.getFilteredMeetings(Integer.parseInt(hours), Integer.parseInt(minutes)).getValue());
-    }public void filterMeetings(int hours, int minutes) {
+    }*/
+    public void filterMeetings(String type, String value){
+        clearFiltersSorts();
+        mAllMeetings.setValue(mMeetingRepository.getFilteredMeetings(type,value).getValue());
+    }
+    /*public void filterMeetings(int hours, int minutes) {
         clearFiltersSorts();
         mAllMeetings.setValue(mMeetingRepository.getFilteredMeetings(hours,minutes).getValue());
     }
@@ -57,7 +63,7 @@ public class MainActivityViewModel extends ViewModel {
     public void filterMeetings(String roomName) {
         clearFiltersSorts();
         mAllMeetings.setValue(mMeetingRepository.getFilteredMeetings(roomName).getValue());
-    }
+    }*/
     public void sortMeetingsRoom(){
         mAllMeetings.setValue(mMeetingRepository.getSortedMeetingsRoom().getValue());
     }

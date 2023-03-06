@@ -4,6 +4,7 @@ import com.example.mareu.models.Meeting;
 import com.example.mareu.models.Room;
 import com.example.mareu.models.Time;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,11 +47,11 @@ public class MyDatabase {
             }
         }
     }
-    public void addMeeting(Time time, Room location, String subject, List<String> participants){
+    public void addMeeting(LocalDateTime date, Room location, String subject, List<String> participants){
         mAllMeetings.add(
                 new Meeting(
                         maxId++,
-                        time,
+                        date,
                         location,
                         subject,
                         participants
@@ -69,25 +70,25 @@ public class MyDatabase {
     }
     private void generateRandomMeetings(){
         addMeeting(
-                new Time(14,30),
+                LocalDateTime.of(2022,2,12,14,45),
                 mAllRooms.get(8),
                 "future changes",
                 Arrays.asList("John.do@gmail.com", "person2@gmail.com", "person3@gmail.com")
         );
         addMeeting(
-                new Time(9,15),
+                LocalDateTime.of(2022,2,12,15,30),
                 mAllRooms.get(8),
                 "investements",
                 Arrays.asList("person2@gmail.com", "person3@gmail.com")
         );
         addMeeting(
-                new Time(15,0),
+                LocalDateTime.of(2022,2,12,7,20),
                 mAllRooms.get(6),
                 "recrutment",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
         );
         addMeeting(
-                new Time(15,45),
+                LocalDateTime.of(2022,2,12,15,45),
                 mAllRooms.get(4),
                 "redundancy",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com", "person7@gmail.com")

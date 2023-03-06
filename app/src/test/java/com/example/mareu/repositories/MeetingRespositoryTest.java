@@ -14,6 +14,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import com.example.mareu.models.Room;
 import com.example.mareu.models.Time;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -42,7 +43,7 @@ public class MeetingRespositoryTest{
     @Test
     public void testAddMeeting() {
         meetingRepository.addMeeting(
-                new Time(18,0),
+                LocalDateTime.of(2022,2,12,18,0),
                 new Room(105,6),
                 "recrutement",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
@@ -52,42 +53,42 @@ public class MeetingRespositoryTest{
     @Test
     public void testFilterByHour(){
         meetingRepository.addMeeting(
-                new Time(15,0),
+                LocalDateTime.of(2022,2,12,15,0),
                 new Room(105,6),
                 "recrutement",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
         );
-        assertEquals(3,meetingRepository.getFilteredMeetings(15).getValue().size());
+        assertEquals(3,meetingRepository.getFilteredMeetings("hourOnly", "15").getValue().size());
     }
     @Test
     public void testFilterByHour_twice(){
         meetingRepository.addMeeting(
-                new Time(15,0),
+                LocalDateTime.of(2022,2,12,15,0),
                 new Room(105,6),
                 "recrutement",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
         );
-        assertEquals(3,meetingRepository.getFilteredMeetings(15).getValue().size());
-        assertEquals(1,meetingRepository.getFilteredMeetings(14).getValue().size());
+        assertEquals(3,meetingRepository.getFilteredMeetings("hourOnly", "15").getValue().size());
+        assertEquals(1,meetingRepository.getFilteredMeetings("hourOnly", "14").getValue().size());
     }
     @Test
     public void testFilterByHourAndMinutes(){
         meetingRepository.addMeeting(
-                new Time(15,45),
+                LocalDateTime.of(2022,2,12,15,45),
                 new Room(105,6),
                 "recrutement",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
         );
-        assertEquals(2,meetingRepository.getFilteredMeetings(15,45).getValue().size());
+        assertEquals(2,meetingRepository.getFilteredMeetings("time", "22/02/12 15:45").getValue().size());
     }
     @Test
     public void testFilterByRoom(){
         meetingRepository.addMeeting(
-                new Time(15,45),
+                LocalDateTime.of(2022,2,12,15,45),
                 new Room(105,6),
                 "recrutement",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
         );
-        assertEquals(2,meetingRepository.getFilteredMeetings("105").getValue().size());
+        assertEquals(2,meetingRepository.getFilteredMeetings("room","105").getValue().size());
     }
 }

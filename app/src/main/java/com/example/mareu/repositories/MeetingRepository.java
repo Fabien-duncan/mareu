@@ -4,11 +4,15 @@ import android.os.Build;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.mareu.R;
 import com.example.mareu.data.MyDatabase;
 import com.example.mareu.models.Meeting;
 import com.example.mareu.models.Room;
 import com.example.mareu.models.Time;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -40,27 +44,25 @@ public class MeetingRepository {
         System.out.println("getting all meetings and there are " + allMeetings.getValue().size());
         return allMeetings;
     }
-    //filters by hour only
-    public MutableLiveData<List<Meeting>> getFilteredMeetings(int hour){
+    public MutableLiveData<List<Meeting>> getFilteredMeetings(String type, String value) {
         MutableLiveData<List<Meeting>> filteredMeeting = new MutableLiveData<>(new ArrayList<>());;
         List<Meeting> filteredMeetingList = new ArrayList<>();
         List<Meeting> allMeetingList = allMeetings.getValue();
-        for(int i =0; i < allMeetingList.size(); i++){
-            if(allMeetingList.get(i).getTime().getHours() == hour){
-                filteredMeetingList.add(allMeetingList.get(i));
-            }
-        }
-        filteredMeeting.setValue(filteredMeetingList);
-        return filteredMeeting;
-    }
-    //filters by exact time
-    public MutableLiveData<List<Meeting>> getFilteredMeetings(int hour, int minutes){
-        MutableLiveData<List<Meeting>> filteredMeeting = new MutableLiveData<>(new ArrayList<>());;
-        List<Meeting> filteredMeetingList = new ArrayList<>();
-        List<Meeting> allMeetingList = allMeetings.getValue();
-        for(int i =0; i < allMeetingList.size(); i++){
-            if(allMeetingList.get(i).getTime().getHours() == hour && allMeetingList.get(i).getTime().getMinutes() == minutes){
-                filteredMeetingList.add(allMeetingList.get(i));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
+        for(int i =0; i < allMeetingList.size(); i++) {
+            switch (type) {
+                case "hourOnly":
+                    if(String.valueOf(allMeetingList.get(i).getDate().getHour()).equals(value))filteredMeetingList.add(allMeetingList.get(i));
+                    break;
+                case "time":
+                    if (allMeetingList.get(i).getDate().format(formatter).equals(value))filteredMeetingList.add(allMeetingList.get(i));
+                    break;
+                case "room":
+                    if (allMeetingList.get(i).getLocation().getRoomNumber() == Integer.parseInt(value)) {
+                        filteredMeetingList.add(allMeetingList.get(i));
+                    }
+                    break;
+                default:
             }
         }
         filteredMeeting.setValue(filteredMeetingList);
@@ -100,7 +102,7 @@ public class MeetingRepository {
             @Override
             public int compare(Meeting meeting, Meeting t1) {
                 int comparison;
-                comparison = meeting.getTime().toString().compareTo(t1.getTime().toString());
+                comparison = meeting.getDate().toString().compareTo(t1.getDate().toString());
                 return comparison;
             }
         });
@@ -137,8 +139,8 @@ public class MeetingRepository {
         myDatabase.deleteMeeting(meetingId);
         allMeetings.setValue(myDatabase.getAllMeetings());
     }
-    public void addMeeting(Time time, Room location, String subject, List<String> participants){
-        myDatabase.addMeeting(time,location, subject, participants);
+    public void addMeeting(LocalDateTime date, Room location, String subject, List<String> participants){
+        myDatabase.addMeeting(date,location, subject, participants);
         allMeetings.setValue(myDatabase.getAllMeetings());
 
     }

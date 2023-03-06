@@ -21,6 +21,7 @@ import com.example.mareu.viewmodels.AddMeetingViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 public class AddMeetingActivity extends AppCompatActivity {
@@ -80,7 +81,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                 if(subject.isEmpty()||participants.isEmpty()||!isTimeSelected) Toast.makeText(getApplicationContext(), "missing fiels", Toast.LENGTH_LONG).show();
                 else {
                     mAddMeetingViewModel.onAddButtonClicked(
-                            new Time(hours, minutes),
+                            LocalDateTime.of(2022,2,6,hours, minutes),
                             roomSelectionSpinner.getSelectedItemPosition(),
                             subject,
                             participants

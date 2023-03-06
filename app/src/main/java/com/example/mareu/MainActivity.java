@@ -29,6 +29,7 @@ import com.example.mareu.viewmodels.MainActivityViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements MeetingAdapter.MeetingClickListener {
     private RecyclerView mRecyclerView;
@@ -123,9 +124,10 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
         submitTimeFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(MainActivity.this, "searching for " + hoursNumberPicker.getValue() + ":" + minutesNumberPicker.getValue(), Toast.LENGTH_SHORT).show();
-                if(minutesCheckBox.isChecked())mMainActivityViewModel.filterMeetings(hoursNumberPicker.getValue(),minutesNumberPicker.getValue());
-                else mMainActivityViewModel.filterMeetings(hoursNumberPicker.getValue());
+                Toast.makeText(MainActivity.this, "searching for " + "22/02/12 "+ String.format(Locale.getDefault(),"%02d:%02d",hoursNumberPicker.getValue(), minutesNumberPicker.getValue()), Toast.LENGTH_SHORT).show();
+                System.out.println("searching for " + "22/02/12 "+ String.format(Locale.getDefault(),"%02d:%02d",hoursNumberPicker.getValue(), minutesNumberPicker.getValue()));
+                if(minutesCheckBox.isChecked())mMainActivityViewModel.filterMeetings("time", "22/02/12 "+ String.format(Locale.getDefault(),"%02d:%02d",hoursNumberPicker.getValue(), minutesNumberPicker.getValue()));
+                else mMainActivityViewModel.filterMeetings("hourOnly", String.valueOf(hoursNumberPicker.getValue()));
                 mTimePickerAlertDialog.dismiss();
             }
         });
@@ -146,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "searching for Room " + roomArray[roomSelectionSpinner.getSelectedItemPosition()], Toast.LENGTH_SHORT).show();
-                mMainActivityViewModel.filterMeetings(roomArray[roomSelectionSpinner.getSelectedItemPosition()]);
+                mMainActivityViewModel.filterMeetings("room",roomArray[roomSelectionSpinner.getSelectedItemPosition()]);
                 mRoomPickerAlertDialog.dismiss();
             }
         });
