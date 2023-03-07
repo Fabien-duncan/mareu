@@ -13,7 +13,7 @@
                 android:title="filtrer" >
                 <menu>
                     <item android:id="@+id/menu_filter_time"
-                        android:title="par heures"/>
+                        android:title="par date/heures"/>
                     <item android:id="@+id/menu_filter_room"
                         android:title="par salles"/>
                 </menu>

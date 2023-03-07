@@ -1,16 +1,11 @@
 package com.example.mareu.repositories;
 
-import android.os.Build;
-
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.mareu.R;
 import com.example.mareu.data.MyDatabase;
 import com.example.mareu.models.Meeting;
 import com.example.mareu.models.Room;
-import com.example.mareu.models.Time;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -48,21 +43,35 @@ public class MeetingRepository {
         MutableLiveData<List<Meeting>> filteredMeeting = new MutableLiveData<>(new ArrayList<>());;
         List<Meeting> filteredMeetingList = new ArrayList<>();
         List<Meeting> allMeetingList = allMeetings.getValue();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
+        DateTimeFormatter formatter;
         for(int i =0; i < allMeetingList.size(); i++) {
-            switch (type) {
-                case "hourOnly":
-                    if(String.valueOf(allMeetingList.get(i).getDate().getHour()).equals(value))filteredMeetingList.add(allMeetingList.get(i));
-                    break;
-                case "time":
-                    if (allMeetingList.get(i).getDate().format(formatter).equals(value))filteredMeetingList.add(allMeetingList.get(i));
-                    break;
-                case "room":
-                    if (allMeetingList.get(i).getLocation().getRoomNumber() == Integer.parseInt(value)) {
-                        filteredMeetingList.add(allMeetingList.get(i));
-                    }
-                    break;
-                default:
+            if(type.equals("room")) {
+                if(String.valueOf(allMeetingList.get(i).getLocation().getRoomNumber()).equals(value))
+                    filteredMeetingList.add(allMeetingList.get(i));
+            }
+            else{
+                switch (type) {
+                    case "year":
+                        formatter = DateTimeFormatter.ofPattern("yy");
+                        break;
+                    case "month":
+                        formatter = DateTimeFormatter.ofPattern("yy/MM");
+                        break;
+                    case "day":
+                        formatter = DateTimeFormatter.ofPattern("yy/MM/dd");
+                        break;
+                    case "hour":
+                        formatter = DateTimeFormatter.ofPattern("yy/MM/dd HH");
+                        break;
+                    case "minute":
+                        formatter = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
+                        break;
+                    default:
+                        value = "23/03/02 12:00";
+                        formatter = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
+                }
+                if (allMeetingList.get(i).getDate().format(formatter).equals(value))
+                    filteredMeetingList.add(allMeetingList.get(i));
             }
         }
         filteredMeeting.setValue(filteredMeetingList);
@@ -80,6 +89,31 @@ public class MeetingRepository {
         }
         filteredMeeting.setValue(filteredMeetingList);
         return filteredMeeting;
+    }
+    public MutableLiveData<List<Meeting>> getSortedMeetings(String type){
+        MutableLiveData<List<Meeting>> sortedMeeting = new MutableLiveData<>(new ArrayList<>());;
+        List<Meeting> allMeetingList = allMeetings.getValue();
+        allMeetingList.sort(new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting meeting, Meeting t1) {
+                int comparison = -1;
+                switch (type) {
+                    case "time":
+                        comparison = meeting.getDate().toString().compareTo(t1.getDate().toString());
+                        break;
+                    case "room":
+                        comparison = meeting.getLocation().getRoomNumber()-t1.getLocation().getRoomNumber();
+                        break;
+                    default:
+                        comparison = (int)(meeting.getId()-t1.getId());;
+
+
+                }
+                return comparison;
+            }
+        });
+        sortedMeeting.setValue(allMeetingList);
+        return sortedMeeting;
     }
     public MutableLiveData<List<Meeting>> getSortedMeetingsRoom(){
         MutableLiveData<List<Meeting>> sortedMeeting = new MutableLiveData<>(new ArrayList<>());;

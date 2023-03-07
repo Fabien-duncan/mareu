@@ -126,8 +126,8 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "searching for " + "22/02/12 "+ String.format(Locale.getDefault(),"%02d:%02d",hoursNumberPicker.getValue(), minutesNumberPicker.getValue()), Toast.LENGTH_SHORT).show();
                 System.out.println("searching for " + "22/02/12 "+ String.format(Locale.getDefault(),"%02d:%02d",hoursNumberPicker.getValue(), minutesNumberPicker.getValue()));
-                if(minutesCheckBox.isChecked())mMainActivityViewModel.filterMeetings("time", "22/02/12 "+ String.format(Locale.getDefault(),"%02d:%02d",hoursNumberPicker.getValue(), minutesNumberPicker.getValue()));
-                else mMainActivityViewModel.filterMeetings("hourOnly", String.valueOf(hoursNumberPicker.getValue()));
+                if(minutesCheckBox.isChecked())mMainActivityViewModel.filterMeetings("minute", "22/02/12 "+ String.format(Locale.getDefault(),"%02d:%02d",hoursNumberPicker.getValue(), minutesNumberPicker.getValue()));
+                else mMainActivityViewModel.filterMeetings("hour", "22/02/12 " +String.format(Locale.getDefault(),"%02d",hoursNumberPicker.getValue()));
                 mTimePickerAlertDialog.dismiss();
             }
         });

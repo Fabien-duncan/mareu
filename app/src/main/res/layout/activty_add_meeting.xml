@@ -49,6 +49,13 @@
             android:onClick="popTimePicker"
             android:text="Selection l'heure"
             android:layout_margin="8dp"/>
+        <Button
+            android:id="@+id/addMeeting_datePicker_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="popDatePicker"
+            android:text="Selection la date"
+            android:layout_margin="8dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

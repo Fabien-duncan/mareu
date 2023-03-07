@@ -12,7 +12,6 @@ import java.util.List;
 
 public class Meeting {
     private final long id;
-    private Time time;
 
     private LocalDateTime date;
     private Room location;
@@ -34,13 +33,6 @@ public class Meeting {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
-    /*public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
-    }*/
 
     public Room getLocation() {
         return location;
@@ -66,7 +58,7 @@ public class Meeting {
         this.participants = participants;
     }
     public String detailsToString(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
         return location.getRoomNumber() + " - " + date.format(formatter) + " - " + subject;
     }
     public String participantsToString(){

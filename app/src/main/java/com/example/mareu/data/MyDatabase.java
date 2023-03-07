@@ -2,7 +2,6 @@ package com.example.mareu.data;
 
 import com.example.mareu.models.Meeting;
 import com.example.mareu.models.Room;
-import com.example.mareu.models.Time;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -85,13 +84,37 @@ public class MyDatabase {
                 LocalDateTime.of(2022,2,12,7,20),
                 mAllRooms.get(6),
                 "recrutment",
-                Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
+                Arrays.asList("person2@gmail.com","person1@gmail.com", "person3@gmail.com")
         );
         addMeeting(
                 LocalDateTime.of(2022,2,12,15,45),
                 mAllRooms.get(4),
+                "investments",
+                Arrays.asList("person5@gmail.com","person2@gmail.com", "person3@gmail.com", "person7@gmail.com")
+        );
+        addMeeting(
+                LocalDateTime.of(2023,3,24,15,0),
+                new Room(109,6),
+                "recrutement",
+                Arrays.asList("person3@gmail.com","person2@gmail.com", "person8@gmail.com")
+        );
+        addMeeting(
+                LocalDateTime.of(2023,3,27,15,0),
+                new Room(109,6),
+                "recrutement",
+                Arrays.asList("person2@gmail.com","person6@gmail.com", "person3@gmail.com")
+        );
+        addMeeting(
+                LocalDateTime.of(2021,3,27,15,0),
+                new Room(109,6),
+                "investments",
+                Arrays.asList("person5@gmail.com","person2@gmail.com", "person1@gmail.com")
+        );
+        addMeeting(
+                LocalDateTime.of(2023,2,25,15,0),
+                new Room(109,6),
                 "redundancy",
-                Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com", "person7@gmail.com")
+                Arrays.asList("person2@gmail.com", "person3@gmail.com")
         );
 
     }
