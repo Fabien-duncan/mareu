@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mareu.R;
 import com.example.mareu.models.Meeting;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +37,15 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
         Meeting currentMeeting = mAllMeetings.get(position);
         holder.meetingDetailsTextView.setText(currentMeeting.detailsToString());
         holder.participantsTextView.setText(currentMeeting.participantsToString());
-        holder.meetingItemImageView.setImageResource(R.drawable.baseline_circle_24);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+        if(currentMeeting.checkIfSoon(LocalDateTime.now().plusDays(1)))holder.meetingItemImageView.setImageResource(R.drawable.baseline_red_circle_24);
+        else holder.meetingItemImageView.setImageResource(R.drawable.baseline_circle_24);
+        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
-        });
+        });*/
         holder.deleteImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

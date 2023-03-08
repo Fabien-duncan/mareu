@@ -12,11 +12,11 @@ import java.util.List;
 
 public class Meeting {
     private final long id;
-
     private LocalDateTime date;
     private Room location;
     private String subject;
     private List<String> participants;
+    //private boolean isSoon = false;
 
     public Meeting(long id, LocalDateTime date, Room location, String subject, List<String> participants) {
         this.date = date;
@@ -24,7 +24,7 @@ public class Meeting {
         this.subject = subject;
         this.participants = participants;
         this.id = id;
-
+        checkIfSoon(LocalDateTime.now().plusDays(1));
     }
     public LocalDateTime getDate() {
         return date;
@@ -67,6 +67,19 @@ public class Meeting {
             sParticipants += item + ", ";
         }
         return sParticipants;
+    }
+    public boolean checkIfSoon(LocalDateTime end){
+
+        if(date.isAfter(LocalDateTime.now()) && date.isBefore(end))
+        {
+            //System.out.println("The date "+date+" lies between" + LocalDateTime.now() +  " and " + end);
+            return true;
+        }
+        else
+        {
+            //System.out.println( date + " does not lie between " + LocalDateTime.now() +  " and " + end);
+            return false;
+        }
     }
 
     public long getId() {

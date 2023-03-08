@@ -94,28 +94,33 @@ public class MyDatabase {
         );
         addMeeting(
                 LocalDateTime.of(2023,3,24,15,0),
-                new Room(109,6),
+                mAllRooms.get(8),
                 "recrutement",
                 Arrays.asList("person3@gmail.com","person2@gmail.com", "person8@gmail.com")
         );
         addMeeting(
                 LocalDateTime.of(2023,3,27,15,0),
-                new Room(109,6),
+                mAllRooms.get(8),
                 "recrutement",
                 Arrays.asList("person2@gmail.com","person6@gmail.com", "person3@gmail.com")
         );
         addMeeting(
-                LocalDateTime.of(2021,3,27,15,0),
-                new Room(109,6),
+                LocalDateTime.now().plusHours(3),
+                mAllRooms.get(8),
                 "investments",
                 Arrays.asList("person5@gmail.com","person2@gmail.com", "person1@gmail.com")
         );
         addMeeting(
                 LocalDateTime.of(2023,2,25,15,0),
-                new Room(109,6),
+                mAllRooms.get(8),
                 "redundancy",
                 Arrays.asList("person2@gmail.com", "person3@gmail.com")
         );
-
+        addMeeting(
+                LocalDateTime.of(2022,2,12,15,45),
+                mAllRooms.get(5),
+                "investments",
+                Arrays.asList("person5@gmail.com","person2@gmail.com", "person3@gmail.com", "person7@gmail.com")
+        );
     }
 }
