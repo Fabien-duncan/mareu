@@ -78,7 +78,7 @@ public class MainActivityViewModel extends ViewModel {
         return dateTime;
     }
     public void clearSorting(){
-        mMeetingRepository.getResetSorting();
+        mMeetingRepository.getSortedMeetings("reset");
     }
     public void deleteMeeting(long meetingId){
         mMeetingRepository.deleteMeeting(meetingId);
