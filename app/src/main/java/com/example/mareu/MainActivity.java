@@ -16,9 +16,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.mareu.adapters.MeetingAdapter;
@@ -110,30 +112,58 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
     }
     public void createTimeFilterPicker(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Choisir l'heure a filtrer");
         View view = getLayoutInflater().inflate(R.layout.time_filter_dialog, null);
-        EditText eHours, eMinutes;
+
         Button submitTimeFilter = view.findViewById(R.id.filter_time_submit);
         NumberPicker hoursNumberPicker = view.findViewById(R.id.filter_hours_number_picker);
         NumberPicker minutesNumberPicker = view.findViewById(R.id.filter_minutes_number_picker);
-        CheckBox minutesCheckBox = view.findViewById(R.id.filter_minutes_check_box);
+        //CheckBox minutesCheckBox = view.findViewById(R.id.filter_minutes_check_box);
+        DatePicker datePicker = view.findViewById(R.id.filter_date_picker);
+        Spinner filterTypeSelectionSpinner = view.findViewById(R.id.filter_filterType_Spinner);
+
+        String[] filterTypes = {"année","mois","jour", "heure", "minute"};
+        ArrayAdapter filterTypesAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, filterTypes);
+        filterTypesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterTypeSelectionSpinner.setAdapter(filterTypesAdapter);
+
+        String[] filterTypesTranslator = {"year","month","day", "hour", "minute"};
+
         hoursNumberPicker.setMinValue(0);
         hoursNumberPicker.setMaxValue(23);
         minutesNumberPicker.setMaxValue(0);
         minutesNumberPicker.setMaxValue(59);
+
         submitTimeFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "searching for " + "22/02/12 "+ String.format(Locale.getDefault(),"%02d:%02d",hoursNumberPicker.getValue(), minutesNumberPicker.getValue()), Toast.LENGTH_SHORT).show();
-                System.out.println("searching for " + "22/02/12 "+ String.format(Locale.getDefault(),"%02d:%02d",hoursNumberPicker.getValue(), minutesNumberPicker.getValue()));
-                if(minutesCheckBox.isChecked())mMainActivityViewModel.filterMeetings("minute", "22/02/12 "+ String.format(Locale.getDefault(),"%02d:%02d",hoursNumberPicker.getValue(), minutesNumberPicker.getValue()));
-                else mMainActivityViewModel.filterMeetings("hour", "22/02/12 " +String.format(Locale.getDefault(),"%02d",hoursNumberPicker.getValue()));
+                String type = filterTypesTranslator[filterTypeSelectionSpinner.getSelectedItemPosition()];
+                mMainActivityViewModel.filterMeetings(type, mMainActivityViewModel.createDateTimeString(
+                        type,
+                        datePicker.getYear(),
+                        datePicker.getMonth()+1,
+                        datePicker.getDayOfMonth(),
+                        hoursNumberPicker.getValue(),
+                        minutesNumberPicker.getValue()));
                 mTimePickerAlertDialog.dismiss();
             }
         });
         builder.setView(view);
         mTimePickerAlertDialog = builder.create();
     }
+    /*public void bindNumberPickers(NumberPicker hours, NumberPicker minutes){
+        hours.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                minutes.setEnabled(true);
+            }
+        });
+        minutes.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                //minutes.setEnabled(true);
+            }
+        });
+    }*/
     public void createRoomFilterPicker(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Choisir la Salle a filtrer");
@@ -155,7 +185,6 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
         builder.setView(view);
         mRoomPickerAlertDialog = builder.create();
     }
-
 
     @Override
     public void removeMeeting(long id) {

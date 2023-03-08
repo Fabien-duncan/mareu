@@ -1,45 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Date"
+        android:textAlignment="center"
+        android:textSize="28sp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/filter_time_hours"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="heures:" />
-        <NumberPicker
-            android:id="@+id/filter_hours_number_picker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <CheckBox android:id="@+id/filter_minutes_check_box"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:gravity="center">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="inclure les minutes" />
-        <TextView
-            android:id="@+id/filter_time_minutes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="minutes:" />
-        <NumberPicker
-            android:id="@+id/filter_minutes_number_picker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="minutes"/>
-        <Button
-            android:id="@+id/filter_time_submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="Valider"
-            android:layout_marginTop="10dp"/>
+            android:layout_margin="10dp"
+            android:layout_marginTop="20dp">
 
+            <DatePicker
+                android:id="@+id/filter_date_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Heure"
+        android:textAlignment="center"
+        android:textSize="28sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:gravity="center">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+            <TextView
+                android:id="@+id/filter_time_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="heures:" />
+            <NumberPicker
+                android:id="@+id/filter_hours_number_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="heures:"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
 
-</RelativeLayout>
+
+            <TextView
+                android:id="@+id/filter_time_minutes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="minutes:" />
+            <NumberPicker
+                android:id="@+id/filter_minutes_number_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="minutes"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="selectionner le type de filtre. Filtrer par: "
+            android:textAlignment="center"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/filter_filterType_Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/filter_time_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Valider" />
+</LinearLayout>
