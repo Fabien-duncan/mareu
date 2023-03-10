@@ -57,6 +57,7 @@ public class AddMeetingActivity extends AppCompatActivity {
 
         String[] roomArray = mAddMeetingViewModel.getRoomNumbers();
         ArrayAdapter roomSelectionAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, roomArray);
+
         roomSelectionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roomSelectionSpinner.setAdapter(roomSelectionAdapter);
 

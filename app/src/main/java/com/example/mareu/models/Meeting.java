@@ -81,7 +81,10 @@ public class Meeting {
             return false;
         }
     }
-
+    public String detailsForContentDescription(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+        return "Sale " + location.getRoomNumber() + " date/heure " + date.format(formatter) + " sujet " + subject;
+    }
     public long getId() {
         return id;
     }

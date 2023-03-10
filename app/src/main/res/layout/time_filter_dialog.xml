@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Date"
+        android:text="@string/date_picker"
         android:textAlignment="center"
         android:textSize="28sp"/>
 
@@ -29,6 +29,7 @@
 
             <DatePicker
                 android:id="@+id/filter_date_picker"
+                android:contentDescription="@string/date_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:calendarViewShown="false"
@@ -40,7 +41,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Heure"
+        android:text="@string/time_picker"
         android:textAlignment="center"
         android:textSize="28sp"/>
     <LinearLayout
@@ -54,16 +55,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
+
             <TextView
                 android:id="@+id/filter_time_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="heures:" />
+                android:text="@string/hours"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="VisualLintOverlap" />
+
             <NumberPicker
                 android:id="@+id/filter_hours_number_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="heures:"/>
+                android:hint="@string/hours"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -75,12 +85,20 @@
                 android:id="@+id/filter_time_minutes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="minutes:" />
+                android:text="@string/minutes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="VisualLintOverlap" />
+
             <NumberPicker
                 android:id="@+id/filter_minutes_number_picker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="minutes"/>
+                android:hint="@string/minutes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,25 +111,31 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="selectionner le type de filtre. Filtrer par: "
+            android:text="@string/filter_type_select"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
             android:id="@+id/filter_filterType_Spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:contentDescription="@string/filter_type_select"
             android:gravity="center"
+            android:padding="4dp"
             android:textAlignment="center"
-            android:textSize="16sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            tools:ignore="DuplicateSpeakableTextCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <Button
         android:id="@+id/filter_time_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Valider" />
+        android:text="@string/confirm" />
 </LinearLayout>

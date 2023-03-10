@@ -38,6 +38,9 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
         holder.meetingDetailsTextView.setText(currentMeeting.detailsToString());
         holder.participantsTextView.setText(currentMeeting.participantsToString());
 
+        //accessibility content description
+        holder.deleteImageButton.setContentDescription("suprimer l'élément " + currentMeeting.detailsForContentDescription());
+
         if(currentMeeting.checkIfSoon(LocalDateTime.now().plusDays(1)))holder.meetingItemImageView.setImageResource(R.drawable.baseline_red_circle_24);
         else holder.meetingItemImageView.setImageResource(R.drawable.baseline_circle_24);
         /*holder.itemView.setOnClickListener(new View.OnClickListener() {

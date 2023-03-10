@@ -11,10 +11,13 @@ import static org.mockito.Mockito.mock;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
+import com.example.mareu.models.Meeting;
 import com.example.mareu.models.Room;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MeetingRespositoryTest{
@@ -116,6 +119,57 @@ public class MeetingRespositoryTest{
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
         );
         assertEquals(2,meetingRepository.getFilteredMeetings("room","105").getValue().size());
+    }
+    @Test
+    public void testSortByTime(){
+        List<Meeting> sortedMeetings = new ArrayList<>();
+        //sorted by id
+        sortedMeetings = meetingRepository.getAllMeetings().getValue();
+        assertFalse(checkSortedMeeting("time", sortedMeetings));
+        //sorted by time
+        sortedMeetings = meetingRepository.getSortedMeetings("time").getValue();
+        assertTrue(checkSortedMeeting("time",sortedMeetings));
+    }
+    @Test
+    public void testSortByRoom(){
+        List<Meeting> sortedMeetings = new ArrayList<>();
+        //sorted by id
+        sortedMeetings = meetingRepository.getAllMeetings().getValue();
+        assertFalse(checkSortedMeeting("room",sortedMeetings));
+        //sorted room
+        sortedMeetings = meetingRepository.getSortedMeetings("room").getValue();
+        assertTrue(checkSortedMeeting("room", sortedMeetings));
+    }
+    @Test
+    public void testSortByID(){
+        List<Meeting> sortedMeetings = new ArrayList<>();
+        //sorted by id
+        sortedMeetings = meetingRepository.getAllMeetings().getValue();
+        assertTrue(checkSortedMeeting("id",sortedMeetings));
+        //sorted room
+        sortedMeetings = meetingRepository.getSortedMeetings("room").getValue();
+        assertFalse(checkSortedMeeting("id", sortedMeetings));
+    }
+    private boolean checkSortedMeeting(String type, List<Meeting> sortedMeetings) {
+        boolean isSorted = true;
+        for (int i = 1; i < sortedMeetings.size(); i++) {
+            String before;
+            String current;
+            switch (type) {
+                case "time":
+                    before = sortedMeetings.get(i - 1).getDate().toString();
+                    current = sortedMeetings.get(i).getDate().toString();
+                    if (before.compareTo(current) > 0) isSorted = false;
+                    break;
+                case "room":
+                    if (sortedMeetings.get(i - 1).getLocation().getRoomNumber() > sortedMeetings.get(i).getLocation().getRoomNumber()) isSorted = false;
+                    break;
+                default:
+                    if (sortedMeetings.get(i - 1).getId() > sortedMeetings.get(i).getId())
+                        isSorted = false;
+            }
+        }
+        return isSorted;
     }
     private void generateSomeMeetings() {
         meetingRepository.addMeeting(
