@@ -3,75 +3,46 @@ package com.example.mareu;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.doubleClick;
-import static androidx.test.espresso.action.ViewActions.longClick;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.action.ViewActions.swipeDown;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withInputType;
-import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 import static com.example.mareu.RecyclerViewItemCountAssertion.withItemCount;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.hasValue;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.AllOf.allOf;
 
-//import android.support.test.espresso.contrib.RecyclerViewActions;
-
-import android.app.Instrumentation;
-import android.app.TimePickerDialog;
-import android.os.SystemClock;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
-import androidx.collection.LongSparseArray;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.action.GeneralClickAction;
-import androidx.test.espresso.action.GeneralLocation;
-import androidx.test.espresso.action.GeneralSwipeAction;
-import androidx.test.espresso.action.Press;
-import androidx.test.espresso.action.Swipe;
-import androidx.test.espresso.action.Tap;
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
 
-import com.example.mareu.models.Room;
-import com.example.mareu.repositories.MeetingRepository;
+import com.example.mareu.data.MyDatabase;
+import com.example.mareu.models.Meeting;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -199,12 +170,31 @@ public class MeetingListTest {
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(2));
     }
     @Test
-        public void filterSortBy_shouldSortItemsByTime() throws InterruptedException {
+        public void filterSortBy_shouldSortItemsByTime(){
         onView(withId(R.id.menu_options)).perform(click());
         onView(withText("trier")).perform(click());
         onView(withText("par heures")).perform(click());
 
-        Thread.sleep(4000);
+        List<String> sortedMeetings = getsortedMeetingList("time");
+        for(int i =0; i < sortedMeetings.size()-1; i++) {
+            onView(new RecyclerViewMatcher(R.id.meetings_rv)
+                    .atPositionOnView(i, R.id.meetings_item_tv_details))
+                    .check(matches(withText(sortedMeetings.get(i))));
+        }
+    }
+    @Test
+    public void filterSortBy_shouldSortItemsByRoom(){
+        onView(withId(R.id.menu_options)).perform(click());
+        onView(withText("trier")).perform(click());
+        onView(withText("par salles")).perform(click());
+
+
+        List<String> sortedMeetings = getsortedMeetingList("room");
+        for(int i =0; i < sortedMeetings.size()-1; i++) {
+            onView(new RecyclerViewMatcher(R.id.meetings_rv)
+                    .atPositionOnView(i, R.id.meetings_item_tv_details))
+                    .check(matches(withText(sortedMeetings.get(i))));
+        }
     }
     private void selectValueNumberPicker(int pickerId, int value)
     {
@@ -225,29 +215,32 @@ public class MeetingListTest {
             }
         });
     }
+    private List<String> getsortedMeetingList(String type){
+        MyDatabase database = new MyDatabase();
+        List<Meeting> meetings = database.getAllMeetings();
+        meetings.sort(new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting meeting, Meeting t1) {
+                int comparison;
+                switch (type) {
+                    case "time":
+                        comparison = meeting.getDate().toString().compareTo(t1.getDate().toString());
+                        break;
+                    case "room":
+                        comparison = meeting.getLocation().getRoomNumber()-t1.getLocation().getRoomNumber();
+                        break;
+                    default:
+                        comparison = (int)(meeting.getId()-t1.getId());
 
 
-    /*public static void selectNumberPickerValue(int pickerId, int targetValue, ActivityTestRule activityTestRule) {
-        final int ROWS_PER_SWIPE = 5;
-        NumberPicker numberPicker = (NumberPicker)activityTestRule.getActivity().findViewById(pickerId);
-        ViewInteraction viewInteraction = onView(withId(pickerId));
-
-        while (targetValue != numberPicker.getValue()) {
-            int delta = Math.abs(targetValue - numberPicker.getValue());
-            if (targetValue < numberPicker.getValue()) {
-                if (delta >= ROWS_PER_SWIPE) {
-                    viewInteraction.perform(new GeneralSwipeAction(Swipe.FAST, GeneralLocation.TOP_CENTER, GeneralLocation.BOTTOM_CENTER, Press.FINGER));
-                } else {
-                    viewInteraction.perform(new GeneralClickAction(Tap.SINGLE, GeneralLocation.TOP_CENTER, Press.FINGER));
                 }
-            } else {
-                if (delta >= ROWS_PER_SWIPE) {
-                    viewInteraction.perform(new GeneralSwipeAction(Swipe.FAST, GeneralLocation.BOTTOM_CENTER, GeneralLocation.TOP_CENTER, Press.FINGER));
-                } else {
-                    viewInteraction.perform(new GeneralClickAction(Tap.SINGLE, GeneralLocation.BOTTOM_CENTER, Press.FINGER));
-                }
+                return comparison;
             }
-            SystemClock.sleep(50);
+        });
+        List<String> outputList =new ArrayList<>();
+        for(int i =0; i < meetings.size(); i++){
+            outputList.add(meetings.get(i).detailsToString());
         }
-    }*/
+        return outputList;
+    }
 }
