@@ -12,14 +12,20 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Retrieves data base of meetings and rooms.
+ * performs filters and sorts on data in order to pass on to the viewModels
+ */
 public class MeetingRepository {
     private MutableLiveData<List<Meeting>> allMeetings;
-
-
-
     private MutableLiveData<List<Room>> allRooms;
-    private long maxId = 0;
     private MyDatabase myDatabase;
+
+    /**
+     * Constructor
+     * retrieves a fake data base from the class MyDatabase
+     * initialises mutable live data for rooms and meetings
+     */
     public MeetingRepository() {
         myDatabase = new MyDatabase();
         allRooms = new MutableLiveData<>(new ArrayList<>());
@@ -28,17 +34,22 @@ public class MeetingRepository {
         allMeetings.setValue(myDatabase.getAllMeetings());
     }
 
-    /*public static MeetingRespository getInstance() {
-        if(instance == null){
-            instance = new MeetingRespository();
-        }
-        return instance;
-    }*/
+    /**
+     * @return all meetings
+     */
     public MutableLiveData<List<Meeting>> getAllMeetings(){
         allMeetings.setValue(myDatabase.getAllMeetings());
         System.out.println("getting all meetings and there are " + allMeetings.getValue().size());
         return allMeetings;
     }
+
+    /**
+     * Used to filter meetings by date or room.
+     * can filter date by: year, month, hour, minute
+     * @param type used for deciding the type of filter:"room", "year", "month", "hour", "minute"
+     * @param value what will be used for the filter
+     * @return filtered meetings
+     */
     public MutableLiveData<List<Meeting>> getFilteredMeetings(String type, String value) {
         MutableLiveData<List<Meeting>> filteredMeeting = new MutableLiveData<>(new ArrayList<>());;
         List<Meeting> filteredMeetingList = new ArrayList<>();
@@ -77,6 +88,13 @@ public class MeetingRepository {
         filteredMeeting.setValue(filteredMeetingList);
         return filteredMeeting;
     }
+
+    /**
+     *
+     * sort meetings by room in ascending order
+     * @param type by "room" or by "time"
+     * @return sorted meetings
+     */
     public MutableLiveData<List<Meeting>> getSortedMeetings(String type){
         MutableLiveData<List<Meeting>> sortedMeeting = new MutableLiveData<>(new ArrayList<>());;
         List<Meeting> allMeetingList = allMeetings.getValue();
@@ -102,9 +120,18 @@ public class MeetingRepository {
         sortedMeeting.setValue(allMeetingList);
         return sortedMeeting;
     }
+
+    /**
+     * @return all the rooms
+     */
     public MutableLiveData<List<Room>> getAllRooms() {
         return allRooms;
     }
+
+    /**
+     * used to only rieve the room numbers as an array of Strings
+     * @return a list of strings containing the room numbers
+     */
     public String[] getRoomNumbers(){
         List<Room> rooms = allRooms.getValue();
         String[] roomNumbers = new String[rooms.size()];
@@ -113,17 +140,35 @@ public class MeetingRepository {
         }
         return roomNumbers;
     }
+
+    /**
+     * removes a Meeting by id
+     * @param meetingId
+     */
     public void deleteMeeting(long meetingId) {
 
         myDatabase.deleteMeeting(meetingId);
         allMeetings.setValue(myDatabase.getAllMeetings());
     }
+    /**
+     * Used to create a new Meeting with:
+     * @param date of new meeting
+     * @param location of meeting
+     * @param subject of meeting
+     * @param participants List of participants as a string
+     */
     public void addMeeting(LocalDateTime date, Room location, String subject, List<String> participants){
         myDatabase.addMeeting(date,location, subject, participants);
         allMeetings.setValue(myDatabase.getAllMeetings());
 
     }
-    public void addRoom(int roomNumber, int maxSize){
+
+    /**
+     * Used to create a new Room
+     * @param roomNumber
+     * @param maxSize
+     */
+    public void addRoom(int roomNumber, int maxSize){//is not used at the moment but could be implemented if the feature was needed
        myDatabase.addRoom(roomNumber,maxSize);
        allRooms.setValue(myDatabase.getAllRooms());
     }

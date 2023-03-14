@@ -17,9 +17,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Used to link the RecycerView in the main activity witht the list of meetings
+ */
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingHolder>{
     private List<Meeting> mAllMeetings = new ArrayList<>();
     private MeetingClickListener clickListener;
+
+    /**
+     * Constructor
+     * @param clickListener
+     */
     public MeetingAdapter(MeetingClickListener clickListener) {
         this.clickListener = clickListener;
     }
@@ -41,14 +49,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
         //accessibility content description
         holder.deleteImageButton.setContentDescription("suprimer l'élément " + currentMeeting.detailsForContentDescription());
 
-        if(currentMeeting.checkIfSoon(LocalDateTime.now().plusDays(1)))holder.meetingItemImageView.setImageResource(R.drawable.baseline_red_circle_24);
-        else holder.meetingItemImageView.setImageResource(R.drawable.baseline_circle_24);
-        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        //checks if a meeting is soon and changes the circle depending on the result
+        if(currentMeeting.checkIfSoon(LocalDateTime.now().plusDays(1)))holder.meetingItemImageView.setImageResource(R.drawable.baseline_red_circle_24);//soon
+        else holder.meetingItemImageView.setImageResource(R.drawable.baseline_circle_24);//not soon
 
-            }
-        });*/
         holder.deleteImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,16 +62,26 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
 
     }
 
+    /**
+     * @return the number of meetings
+     */
     @Override
     public int getItemCount() {
         return mAllMeetings.size();
     }
 
+    /**
+     * retrieves the meetings needed to be displayed to the RecyclerView
+     * @param meetings is the List of meetings to be displayed
+     */
     public void setMeetings(List<Meeting> meetings){
         this.mAllMeetings = meetings;
         notifyDataSetChanged();
     }
 
+    /**
+     * is a ViewHolder. This class is used to do the binding of the views
+     */
     class MeetingHolder extends RecyclerView.ViewHolder{
         private TextView meetingDetailsTextView;
         private TextView participantsTextView;
@@ -83,8 +97,12 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
 
         }
     }
+
+    /**
+     * Interface to handle the clicks on a recycler view item
+     */
     public interface MeetingClickListener{
-        void meetingClick(long id);
+        void meetingClick(long id);//this feature is not made yet, but could be used for open a page containing the details of a meeting and being able to edit them
         void removeMeeting(long id);
     }
 }

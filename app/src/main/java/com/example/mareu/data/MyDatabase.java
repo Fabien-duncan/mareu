@@ -8,11 +8,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This class is used as a fake database to provide and store data for the apllication
+ * It creates some pre existing meetings in order to be able to test the application
+ */
 public class MyDatabase {
     public List<Meeting> mAllMeetings;
     public List<Room> mAllRooms;
     private long maxId = 0;
 
+    /**
+     * Constructor method
+     * generates some Rooms and random meetings
+     */
     public MyDatabase() {
         mAllMeetings = new ArrayList<>();
         mAllRooms = new ArrayList<>();
@@ -20,21 +28,24 @@ public class MyDatabase {
         generateRandomMeetings();
     }
 
+    /**
+     * @return a list of all the meetings
+     */
     public List<Meeting> getAllMeetings() {
         return mAllMeetings;
     }
 
-    public void setAllMeetings(List<Meeting> allMeetings) {
-        mAllMeetings = allMeetings;
-    }
-
+    /**
+     * @return the List of Rooms
+     */
     public List<Room> getAllRooms() {
         return mAllRooms;
     }
 
-    public void setAllRooms(List<Room> allRooms) {
-        mAllRooms = allRooms;
-    }
+    /**
+     * Deletes a meeting by id
+     * @param meetingId id of meeting to delete
+     */
     public void deleteMeeting(long meetingId) {
 
         if (mAllMeetings == null) return;
@@ -46,6 +57,14 @@ public class MyDatabase {
             }
         }
     }
+
+    /**
+     * Adds a meeting to List of Meetings
+     * @param date a LocaleDateTime object
+     * @param location a Room object
+     * @param subject
+     * @param participants a List of participants
+     */
     public void addMeeting(LocalDateTime date, Room location, String subject, List<String> participants){
         mAllMeetings.add(
                 new Meeting(
@@ -57,6 +76,12 @@ public class MyDatabase {
                 )
         );
     }
+
+    /**
+     * Adds a new Room to the List of Rooms
+     * @param roomNumber
+     * @param maxSize
+     */
     public void addRoom(int roomNumber, int maxSize){
         mAllRooms.add(new Room(roomNumber,maxSize));
     }
@@ -67,6 +92,7 @@ public class MyDatabase {
             addRoom(i,10);
         }
     }
+    //Generates some meetings for testing purposes
     private void generateRandomMeetings(){
         addMeeting(
                 LocalDateTime.of(2022,2,12,14,45),

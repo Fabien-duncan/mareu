@@ -9,6 +9,10 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+/**
+ * This class is used to find an item at a position in the recycler view
+ * in order to check the values sotred in it.
+ */
 public class RecyclerViewMatcher {
     private final int recyclerViewId;
 

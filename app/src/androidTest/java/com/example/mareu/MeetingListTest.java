@@ -44,11 +44,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Instrumental tests for the Mareu app. This test that the UI works properly and the the interaction behave appropriately.
+ */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class MeetingListTest {
     //private static int ITEMS_COUNT = 12;
-
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule =
             new ActivityScenarioRule<>(MainActivity.class);
@@ -58,7 +60,7 @@ public class MeetingListTest {
         //generateSomeMeetings();
     }
     /**
-     * We ensure that our recyclerview is displaying at least on item
+     * We ensure that our recyclerview is displaying at least one item
      */
     @Test
     public void myMeetingList_shouldNotBeEmpty() {
@@ -66,7 +68,7 @@ public class MeetingListTest {
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(matches(hasMinimumChildCount(1)));
     }
     /**
-     * When we delete an item, the item is no more shown
+     * When we delete a Meeting, the Meeting is shown no more
      */
     @Test
     public void myMeetingList_deleteAction_shouldRemoveItem(){
@@ -75,6 +77,10 @@ public class MeetingListTest {
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(8));
 
     }
+
+    /**
+     * When we create a a Meeting there should be an extra Meeting in the list
+     */
     @Test
     public void createMeeting_shouldAddItem(){
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(9));
@@ -96,6 +102,10 @@ public class MeetingListTest {
         onView(withId(R.id.addMeeting_add_button)).perform(click());
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(10));
     }
+
+    /**
+     * When we filter meetings by year it should only display the meetings of that year only
+     */
     @Test
     public void filterByTime_shouldFilterItemsByYear(){
         onView(withId(R.id.menu_options)).perform(click());
@@ -110,6 +120,9 @@ public class MeetingListTest {
 
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(4));
     }
+    /**
+     * When we filter meetings by Month it should only display the meetings of that a specific year and that month only
+     */
     @Test
     public void filterByTime_shouldFilterItemsByMonth(){
         onView(withId(R.id.menu_options)).perform(click());
@@ -124,6 +137,9 @@ public class MeetingListTest {
 
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(3));
     }
+    /**
+     * When we filter meetings by Day it should only display the meetings of that a specific year, month and that day only
+     */
     @Test
     public void filterByTime_shouldFilterItemsByDay(){
         onView(withId(R.id.menu_options)).perform(click());
@@ -137,6 +153,9 @@ public class MeetingListTest {
         onView(withId(R.id.filter_time_submit)).perform(click());
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(5));
     }
+    /**
+     * When we filter meetings by Hour it should only display the meetings of that a specific year, month, day and that Hour only
+     */
     @Test
     public void filterByTime_shouldFilterItemsByHour() throws InterruptedException {
         onView(withId(R.id.menu_options)).perform(click());
@@ -154,6 +173,9 @@ public class MeetingListTest {
         Thread.sleep(4000);
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(3));
     }
+    /**
+     * When we filter meetings by Minutes it should only display the meetings of that a specific year, month, day, hour and that minute only
+     */
     @Test
     public void filterByTime_shouldFilterItemsByMinutes(){
         onView(withId(R.id.menu_options)).perform(click());
@@ -169,6 +191,9 @@ public class MeetingListTest {
         onView(withId(R.id.filter_time_submit)).perform(click());
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(2));
     }
+    /**
+     * When we sort the Meetings by Time the list of meetings should be ordered by date in ascending order
+     */
     @Test
         public void filterSortBy_shouldSortItemsByTime(){
         onView(withId(R.id.menu_options)).perform(click());
@@ -182,6 +207,9 @@ public class MeetingListTest {
                     .check(matches(withText(sortedMeetings.get(i))));
         }
     }
+    /**
+     * When we sort the Meetings by Room the list of meetings should be ordered by Rooms in ascending order
+     */
     @Test
     public void filterSortBy_shouldSortItemsByRoom(){
         onView(withId(R.id.menu_options)).perform(click());
@@ -196,6 +224,7 @@ public class MeetingListTest {
                     .check(matches(withText(sortedMeetings.get(i))));
         }
     }
+    //used to input values in a number picker using the id and a value
     private void selectValueNumberPicker(int pickerId, int value)
     {
         onView(withId(pickerId)).perform(new ViewAction() {
@@ -215,6 +244,7 @@ public class MeetingListTest {
             }
         });
     }
+    //used to return a list of sorted meetings. This method is used to check of the recyclerview items are sorted correctly.
     private List<String> getsortedMeetingList(String type){
         MyDatabase database = new MyDatabase();
         List<Meeting> meetings = database.getAllMeetings();

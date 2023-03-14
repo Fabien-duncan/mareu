@@ -25,6 +25,14 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
+/**
+ * Activity used to create a new meeting
+ * Contains:
+ * -text fields to enter information
+ * -time picker button which opens a TimePickerDialogue
+ * -date picker button which opens up a DatePickerDialogue
+ * -spinner to select room
+ */
 public class AddMeetingActivity extends AppCompatActivity {
 
     private TextInputEditText subjectTextInput, participantsTextInput;
@@ -45,9 +53,8 @@ public class AddMeetingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_add_meeting);
 
-
-
         mAddMeetingViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this)).get(AddMeetingViewModel.class);
+        //Binding
         timeButton = findViewById(R.id.addMeeting_timePicker_btn);
         dateButton = findViewById(R.id.addMeeting_datePicker_btn);
         roomSelectionSpinner = findViewById(R.id.addMeeting_roomSelection_Spinner);
@@ -55,7 +62,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         subjectTextInput = findViewById(R.id.addMeeting_subject_textInput);
         participantsTextInput = findViewById(R.id.addMeeting_perticipants_textInput);
 
-        String[] roomArray = mAddMeetingViewModel.getRoomNumbers();
+        String[] roomArray = mAddMeetingViewModel.getRoomNumbers();//retrieves rooms for spinner
         ArrayAdapter roomSelectionAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, roomArray);
 
         roomSelectionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -63,6 +70,11 @@ public class AddMeetingActivity extends AppCompatActivity {
 
         bindAddButton();
     }
+
+    /**
+     * Used to pop up a time picker dialogue box
+     * @param view
+     */
     public void popTimePicker(View view){
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -77,6 +89,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         timePickerDialog.setTitle("Selectionner l'heure");
         timePickerDialog.show();
     }
+    /**
+     * Used to pop up a date picker dialogue box
+     * @param view
+     */
     public void popDatePicker(View view){
 
        DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -93,6 +109,12 @@ public class AddMeetingActivity extends AppCompatActivity {
         datePickerDialog.setTitle("Selectionner la date");
         datePickerDialog.show();
     }
+
+    /**
+     * Binds the add button and contains some data validation
+     * in order to prevent erroneous data to be used in the
+     * creation of a new meeting
+     */
     private void bindAddButton(){
         addMeetingButton.setOnClickListener(new View.OnClickListener() {
             @Override

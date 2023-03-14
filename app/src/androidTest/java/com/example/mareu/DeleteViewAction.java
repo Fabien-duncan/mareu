@@ -7,6 +7,10 @@ import androidx.test.espresso.ViewAction;
 
 import org.hamcrest.Matcher;
 
+/**
+ * used to perform the delete action on an item in the recycler view of the main activity.
+ * used in the instrumental tests
+ */
 public class DeleteViewAction implements ViewAction {
     @Override
     public Matcher<View> getConstraints() {

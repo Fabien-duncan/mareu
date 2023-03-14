@@ -10,6 +10,9 @@ import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 
+/**
+ * Used to check if a Recycler view contains a certain amount of items
+ */
 public class RecyclerViewItemCountAssertion implements ViewAssertion {
     private final Matcher<Integer> matcher;
 
