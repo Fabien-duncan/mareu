@@ -156,11 +156,12 @@ public class MeetingRepository {
      * @param location of meeting
      * @param subject of meeting
      * @param participants List of participants as a string
+     * @return the status of the validation
      */
-    public void addMeeting(LocalDateTime date, Room location, String subject, List<String> participants){
-        myDatabase.addMeeting(date,location, subject, participants);
+    public String addMeeting(LocalDateTime date, Room location, String subject, List<String> participants){
+        String validation = myDatabase.addMeeting(date,location, subject, participants);
         allMeetings.setValue(myDatabase.getAllMeetings());
-
+        return validation;
     }
 
     /**

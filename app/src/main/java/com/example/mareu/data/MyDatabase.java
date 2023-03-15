@@ -59,22 +59,25 @@ public class MyDatabase {
     }
 
     /**
-     * Adds a meeting to List of Meetings
+     * Adds a valid meeting to List of Meeting
+     * in order for the meeting to be valid it checks the email addresses in the List of Participants of the meeting
      * @param date a LocaleDateTime object
      * @param location a Room object
      * @param subject
      * @param participants a List of participants
+     * @return validation message
      */
-    public void addMeeting(LocalDateTime date, Room location, String subject, List<String> participants){
-        mAllMeetings.add(
-                new Meeting(
-                        maxId++,
-                        date,
-                        location,
-                        subject,
-                        participants
-                )
+    public String addMeeting(LocalDateTime date, Room location, String subject, List<String> participants){
+        Meeting newMeeting = new Meeting(
+                maxId++,
+                date,
+                location,
+                subject,
+                participants
         );
+        String validation = newMeeting.validateEmailList();
+        if(validation.equals("valid"))mAllMeetings.add(newMeeting);
+        return validation;
     }
 
     /**

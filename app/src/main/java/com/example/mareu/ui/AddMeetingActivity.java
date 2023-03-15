@@ -121,16 +121,19 @@ public class AddMeetingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String subject = subjectTextInput.getText().toString();
                 String participants = participantsTextInput.getText().toString();
-                //checks if fields are not empty
-                if(subject.isEmpty()||participants.isEmpty()||!isTimeSelected||!isDateSelected) Toast.makeText(getApplicationContext(), "missing fiels", Toast.LENGTH_LONG).show();
+                //Data Validation
+                if(subject.isEmpty()||participants.isEmpty()||!isTimeSelected||!isDateSelected) Toast.makeText(getApplicationContext(), "formulaire pas remplis", Toast.LENGTH_LONG).show();
                 else {
-                        mAddMeetingViewModel.onAddButtonClicked(
+                    String emailValidationMessage = mAddMeetingViewModel.onAddButtonClicked(
                             LocalDateTime.of(year,month,day,hours, minutes),
                             roomSelectionSpinner.getSelectedItemPosition(),
                             subject,
                             participants
-                        );
-                    finish();
+                    );
+                    if(emailValidationMessage.equals("valid"))finish();
+                    else {
+                        Toast.makeText(getApplicationContext(), emailValidationMessage, Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });

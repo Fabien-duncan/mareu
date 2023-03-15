@@ -46,7 +46,7 @@ public class MeetingRespositoryTest{
      */
     @Test
     public void testGetAllMeetings() {
-        assertEquals(7, meetingRepository.getAllMeetings().getValue().size());
+        assertEquals(8, meetingRepository.getAllMeetings().getValue().size());
     }
 
     /**
@@ -56,7 +56,7 @@ public class MeetingRespositoryTest{
     public void testDeleteMeeting() {
         long id = meetingRepository.getAllMeetings().getValue().get(0).getId();
         meetingRepository.deleteMeeting(id);
-        assertEquals(6, meetingRepository.getAllMeetings().getValue().size());
+        assertEquals(7, meetingRepository.getAllMeetings().getValue().size());
     }
 
     /**
@@ -70,7 +70,21 @@ public class MeetingRespositoryTest{
                 "recrutement",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
         );
-        assertEquals(5, meetingRepository.getAllMeetings().getValue().size());
+        assertEquals(9, meetingRepository.getAllMeetings().getValue().size());
+    }
+    @Test
+    public void addingMeetingWithInvalidPaticipantsShouldBeRegected(){
+        meetingRepository.addMeeting(
+                LocalDateTime.of(2022,2,12,18,0),
+                new Room(105,6),
+                "recrutement",
+                Arrays.asList("person2@gmail")
+        );
+        assertEquals(8, meetingRepository.getAllMeetings().getValue().size());
+
+        //generate some more erroneous meetings with a variety of mistakes in the email addresses
+        generateSomeErroneousMeetings();
+        assertEquals(8, meetingRepository.getAllMeetings().getValue().size());
     }
 
     /**
@@ -228,6 +242,7 @@ public class MeetingRespositoryTest{
         }
         return isSorted;
     }
+
     private void generateSomeMeetings() {
         meetingRepository.addMeeting(
                 LocalDateTime.of(2022,2,12,15,45),
@@ -277,6 +292,58 @@ public class MeetingRespositoryTest{
                 new Room(109,6),
                 "recrutement",
                 Arrays.asList("person2@gmail.com","person2@gmail.com", "person3@gmail.com")
+        );
+    }
+    //generates some erroneous meetings with varying erroneous emails
+    private void generateSomeErroneousMeetings() {
+        meetingRepository.addMeeting(
+                LocalDateTime.of(2022,2,12,15,45),
+                new Room(105,6),
+                "recrutement",
+                Arrays.asList("person2gmail.com")
+        );
+        meetingRepository.addMeeting(
+                LocalDateTime.of(2022,2,12,15,0),
+                new Room(101,6),
+                "recrutement",
+                Arrays.asList("person2@gmailcom")
+        );
+        meetingRepository.addMeeting(
+                LocalDateTime.of(2022,2,12,14,0),
+                new Room(106,6),
+                "recrutement",
+                Arrays.asList("@gmail.com")
+        );
+        meetingRepository.addMeeting(
+                LocalDateTime.of(2023,2,12,15,0),
+                new Room(109,6),
+                "recrutement",
+                Arrays.asList("hug uyfuyg uyf ")
+        );
+
+        meetingRepository.addMeeting(
+                LocalDateTime.of(2023,3,24,15,0),
+                new Room(109,6),
+                "recrutement",
+                Arrays.asList("person2@gmail.com","person2gmail.com", "person3@gmail.com")
+        );
+        meetingRepository.addMeeting(
+                LocalDateTime.of(2023,3,27,15,0),
+                new Room(109,6),
+                "recrutement",
+                Arrays.asList("person2@gmail.com","person2@gmail.com", "hug uyfuyg uyf")
+        );
+        meetingRepository.addMeeting(
+                LocalDateTime.of(2021,3,27,15,0),
+                new Room(109,6),
+                "recrutement",
+                Arrays.asList("Person2@gmailcom","person2@gmail.com", "person3@gmail.com")
+        );
+        meetingRepository.addMeeting(
+                LocalDateTime.of(2023,2,25,15,0),
+                new Room(109,6),
+                "recrutement",
+                Arrays.asList("person2@gmail.com","person2@gmail.com", "@gmail.com")
         );
     }
 

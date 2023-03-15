@@ -10,6 +10,8 @@ import com.example.mareu.repositories.MeetingRepository;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
+
 /**
  * ViewModel fo the add meeting activity.
  * Links the Meeting repository with the add meeting activity.
@@ -35,10 +37,10 @@ public class AddMeetingViewModel extends ViewModel {
      * @param subject of meeting
      * @param participants List of participants as a string
      */
-    public void onAddButtonClicked(LocalDateTime date, int location, String subject, String participants){
+    public String onAddButtonClicked(LocalDateTime date, int location, String subject, String participants){
         List<Room> rooms = mMeetingRepository.getAllRooms().getValue();
-        List<String> participantsList = Arrays.asList(participants.split(",", -1));
-        mMeetingRepository.addMeeting(date,rooms.get(location),subject,participantsList);
+        List<String> participantsList = Arrays.asList(participants.split(",", -1));//splits the string of emails into individual components
+        return mMeetingRepository.addMeeting(date,rooms.get(location),subject,participantsList);
     }
 
     /**

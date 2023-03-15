@@ -7,8 +7,10 @@ import androidx.annotation.RequiresApi;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * class to create meetings.
@@ -105,5 +107,26 @@ public class Meeting {
      */
     public long getId() {
         return id;
+    }
+
+    /**
+     * Checks the list of participants to see if there email adresses are in the correct format
+     * @return if the emails are "valid" or the error message
+     */
+    public String validateEmailList(){
+        String status = "valid";
+        String regexPattern = regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        for(int i = 0; i < participants.size(); i++){
+            if(!patternMatches(participants.get(i), regexPattern)) status = "les adresses mail ne sont pas dans le bon format ou vous avez des éspaces après les virgules";
+        }
+
+        return status;
+    }
+    //checks the format of a string to see if it is an email address
+    private static boolean patternMatches(String emailAddress, String regexPattern) {
+        return Pattern.compile(regexPattern)
+                .matcher(emailAddress)
+                .matches();
     }
 }
