@@ -50,7 +50,6 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class MeetingListTest {
-    //private static int ITEMS_COUNT = 12;
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule =
             new ActivityScenarioRule<>(MainActivity.class);
