@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
+import com.example.mareu.databinding.MeetingItemBinding;
 import com.example.mareu.models.Meeting;
 
 import java.time.LocalDateTime;
@@ -35,25 +36,25 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
     @NonNull
     @Override
     public MeetingHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.meeting_item, parent, false);
-        return new MeetingHolder(itemView);
+       LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+       MeetingItemBinding meetingItemBinding = MeetingItemBinding.inflate(layoutInflater,parent, false);
+       return new MeetingHolder(meetingItemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MeetingHolder holder, int position) {
         Meeting currentMeeting = mAllMeetings.get(position);
-        holder.meetingDetailsTextView.setText(currentMeeting.detailsToString());
-        holder.participantsTextView.setText(currentMeeting.participantsToString());
+        holder.mMeetingItemBinding.meetingsItemTvDetails.setText(currentMeeting.detailsToString());
+        holder.mMeetingItemBinding.meetingsItemTvParticipants.setText(currentMeeting.participantsToString());
 
         //accessibility content description
-        holder.deleteImageButton.setContentDescription("suprimer l'élément " + currentMeeting.detailsForContentDescription());
+        holder.mMeetingItemBinding.meetingsItemIbDelete.setContentDescription("suprimer l'élément " + currentMeeting.detailsForContentDescription());
 
         //checks if a meeting is soon and changes the circle depending on the result
-        if(currentMeeting.checkIfSoon(LocalDateTime.now().plusDays(1)))holder.meetingItemImageView.setImageResource(R.drawable.baseline_red_circle_24);//soon
-        else holder.meetingItemImageView.setImageResource(R.drawable.baseline_circle_24);//not soon
+        if(currentMeeting.checkIfSoon(LocalDateTime.now().plusDays(1)))holder.mMeetingItemBinding.meetingsItemIvAvatar.setImageResource(R.drawable.baseline_red_circle_24);//soon
+        else holder.mMeetingItemBinding.meetingsItemIvAvatar.setImageResource(R.drawable.baseline_circle_24);//not soon
 
-        holder.deleteImageButton.setOnClickListener(new View.OnClickListener() {
+        holder.mMeetingItemBinding.meetingsItemIbDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clickListener.removeMeeting(currentMeeting.getId());
@@ -80,21 +81,14 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
     }
 
     /**
-     * is a ViewHolder. This class is used to do the binding of the views
+     * is a ViewHolder. This class is used to do the binding of the view
      */
     class MeetingHolder extends RecyclerView.ViewHolder{
-        private TextView meetingDetailsTextView;
-        private TextView participantsTextView;
-        private ImageView meetingItemImageView;
-        private ImageButton deleteImageButton;
+        private MeetingItemBinding mMeetingItemBinding;
 
-        public MeetingHolder(@NonNull View itemView) {
-            super(itemView);
-            meetingDetailsTextView = itemView.findViewById(R.id.meetings_item_tv_details);
-            participantsTextView = itemView.findViewById(R.id.meetings_item_tv_participants);
-            meetingItemImageView = itemView.findViewById(R.id.meetings_item_iv_avatar);
-            deleteImageButton = itemView.findViewById(R.id.meetings_item_ib_delete);
-
+        public MeetingHolder(@NonNull MeetingItemBinding meetingItemBinding){
+            super(meetingItemBinding.getRoot());
+            mMeetingItemBinding = meetingItemBinding;
         }
     }
 
@@ -102,7 +96,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
      * Interface to handle the clicks on a recycler view item
      */
     public interface MeetingClickListener{
-        void meetingClick(long id);//this feature is not made yet, but could be used for open a page containing the details of a meeting and being able to edit them
+        void meetingClick(long id);//this feature is not made yet, but could be used for openning a page containing the details of a meeting and being able to edit them
         void removeMeeting(long id);
     }
 }
