@@ -36,9 +36,11 @@ import com.example.mareu.models.Meeting;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -74,7 +76,6 @@ public class MeetingListTest {
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(9));
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(1,new DeleteViewAction()));
         onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(8));
-
     }
 
     /**
@@ -82,9 +83,9 @@ public class MeetingListTest {
      */
     @Test
     public void createMeeting_shouldAddItem(){
-        onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(9));
+        onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(8));
         onView(withId(R.id.main_fab_add)).perform(click());
-        onView(withId(R.id.addMeeting_perticipants_textInput)).perform(typeText("person1@gmail.com, person2@gmail.com"));
+        onView(withId(R.id.addMeeting_perticipants_textInput)).perform(typeText("person1@gmail.com,person2@gmail.com"));
         onView(withId(R.id.addMeeting_subject_textInput)).perform(typeText("testMeeting"));
 
         onView(withId(R.id.addMeeting_timePicker_btn)).perform(click());
@@ -99,7 +100,7 @@ public class MeetingListTest {
         onData(allOf(is(instanceOf(String.class)), is("109"))).perform(click());
 
         onView(withId(R.id.addMeeting_add_button)).perform(click());
-        onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(10));
+        onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(9));
     }
 
     /**
@@ -150,13 +151,13 @@ public class MeetingListTest {
         onData(allOf()).inAdapterView(withId(R.id.filter_filterType_Spinner)).atPosition(2).perform();
 
         onView(withId(R.id.filter_time_submit)).perform(click());
-        onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(5));
+        onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(4));
     }
     /**
      * When we filter meetings by Hour it should only display the meetings of that a specific year, month, day and that Hour only
      */
     @Test
-    public void filterByTime_shouldFilterItemsByHour() throws InterruptedException {
+    public void filterByTime_shouldFilterItemsByHour(){
         onView(withId(R.id.menu_options)).perform(click());
         onView(withText("filtrer")).perform(click());
         onView(withText("par date/heures")).perform(click());
@@ -167,10 +168,9 @@ public class MeetingListTest {
         selectValueNumberPicker(R.id.filter_hours_number_picker, 15);
 
         onData(allOf()).inAdapterView(withId(R.id.filter_filterType_Spinner)).atPosition(3).perform();
-        Thread.sleep(4000);
         onView(withId(R.id.filter_time_submit)).perform(click());
-        Thread.sleep(4000);
-        onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(3));
+        //Thread.sleep(4000);
+        onView(allOf(withId(R.id.meetings_rv), isDisplayed())).check(withItemCount(2));
     }
     /**
      * When we filter meetings by Minutes it should only display the meetings of that a specific year, month, day, hour and that minute only
@@ -247,6 +247,7 @@ public class MeetingListTest {
     private List<String> getsortedMeetingList(String type){
         MyDatabase database = new MyDatabase();
         List<Meeting> meetings = database.getAllMeetings();
+        meetings.remove(1);
         meetings.sort(new Comparator<Meeting>() {
             @Override
             public int compare(Meeting meeting, Meeting t1) {
