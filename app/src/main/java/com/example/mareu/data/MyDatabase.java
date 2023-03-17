@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * This class is used as a fake database to provide and store data for the apllication
- * It creates some pre existing meetings in order to be able to test the application
+ * This class is used as a fake database to provide and store data for the application
+ * It creates some pre-existing meetings in order to be able to test the application
  */
 public class MyDatabase {
     public List<Meeting> mAllMeetings;

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * ViewModel fo the main activity.
+ * ViewModel for the main activity.
  * Links the Meeting repository with the main activity.
  */
 public class MainActivityViewModel extends ViewModel {
@@ -50,7 +50,7 @@ public class MainActivityViewModel extends ViewModel {
 
     /**
      * Used to filter meetings by date or room.
-     * can filter date by: year, month, hour, minute
+     * can filter date by: year, month, hour or minute
      * uses the repository method getFilteredMeetings(String type, string value)
      * @param type used for deciding the type of filter:"room", "year", "month", "hour", "minute"
      * @param value what will be used for the filter
@@ -93,7 +93,7 @@ public class MainActivityViewModel extends ViewModel {
      * @param day
      * @param hours
      * @param minutes
-     * @return formatated date string
+     * @return formatted date string
      */
     public String createDateTimeString(String type,int year, int month, int day, int hours, int minutes)
     {
@@ -122,7 +122,7 @@ public class MainActivityViewModel extends ViewModel {
     }
 
     /**
-     * Clear the sorting in order to put it in order to when the meetings were created,
+     * Clear the sorting in order to put it in order of when the meetings were created,
      * hence by id. It uses the getSortedMeetings(String type) method of the repository
      */
     public void clearSorting(){

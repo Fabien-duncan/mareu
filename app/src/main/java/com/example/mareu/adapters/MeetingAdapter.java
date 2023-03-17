@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Used to link the RecycerView in the main activity witht the list of meetings
+ * Used to link the RecyclerView in the main activity with the list of meetings
  */
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingHolder>{
     private List<Meeting> mAllMeetings = new ArrayList<>();
@@ -96,7 +96,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingH
      * Interface to handle the clicks on a recycler view item
      */
     public interface MeetingClickListener{
-        void meetingClick(long id);//this feature is not made yet, but could be used for openning a page containing the details of a meeting and being able to edit them
+        void meetingClick(long id);//this feature is not made yet, but could be used for opening a page containing the details of a meeting and being able to edit them
         void removeMeeting(long id);
     }
 }

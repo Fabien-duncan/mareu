@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Retrieves data base of meetings and rooms.
+ * Retrieves a fake database of meetings and rooms.
  * performs filters and sorts on data in order to pass on to the viewModels
  */
 public class MeetingRepository {
@@ -45,7 +45,7 @@ public class MeetingRepository {
 
     /**
      * Used to filter meetings by date or room.
-     * can filter date by: year, month, hour, minute
+     * can filter date by: year, month, hour or minute
      * @param type used for deciding the type of filter:"room", "year", "month", "hour", "minute"
      * @param value what will be used for the filter
      * @return filtered meetings
@@ -129,7 +129,7 @@ public class MeetingRepository {
     }
 
     /**
-     * used to only rieve the room numbers as an array of Strings
+     * used to only retrieve the room numbers as an array of Strings
      * @return a list of strings containing the room numbers
      */
     public String[] getRoomNumbers(){

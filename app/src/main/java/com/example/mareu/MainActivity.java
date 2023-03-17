@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
     }
 
     /**
-     * Feature no created yet. Would be used to open a activity containin the details of a meeting
+     * Feature not created yet. Would be used to open a activity containing the details of a meeting
      * @param id
      */
     @Override
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
     }
 
     /**
-     * this method is use to create and access a time picker in order top be able to filter
+     * this method is use to create and access a time picker in order to be able to filter
      * meetings by time and/or date. A date picker, 2 number pickers and a spinner are created.
      * The Number pickers are used for selecting a time.
      * The spinner is used for selecting the precision of the filter.
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
     }
 
     /**
-     * used to create a AlerDialogue for selecting the room.
+     * used to create an AlerDialogue for selecting the room.
      * Contains a spinner to select a room.
      */
     public void createRoomFilterPicker(){
@@ -196,8 +196,8 @@ public class MainActivity extends AppCompatActivity implements MeetingAdapter.Me
     }
 
     /**
-     * Overides the method from the MeetingClickListener interface inside the MeetingAdapter class
-     * Deletes a Meeting obejct by ID by calling the deleteMeeting(long id) method of the viewModel
+     * Overrides the method from the MeetingClickListener interface inside the MeetingAdapter class
+     * Deletes a Meeting object by ID by calling the deleteMeeting(long id) method of the viewModel
      * @param id of meeting to delete
      */
     @Override

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * ViewModel fo the add meeting activity.
+ * ViewModel for the add meeting activity.
  * Links the Meeting repository with the add meeting activity.
  */
 public class AddMeetingViewModel extends ViewModel {

@@ -10,19 +10,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.mareu.R;
-import com.example.mareu.databinding.ActivityMainBinding;
-import com.example.mareu.databinding.ActivtyAddMeetingBinding;
+import com.example.mareu.databinding.ActivityAddMeetingBinding;
+import com.example.mareu.databinding.ActivityAddMeetingBinding;
 import com.example.mareu.injection.ViewModelFactory;
 import com.example.mareu.viewmodels.AddMeetingViewModel;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -41,7 +36,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     private AddMeetingViewModel mAddMeetingViewModel;
     private boolean isTimeSelected = false;
     private boolean isDateSelected = false;
-    private ActivtyAddMeetingBinding mActivtyAddMeetingBinding;
+    private ActivityAddMeetingBinding mActivityAddMeetingBinding;
     public static Intent navigate(Context context) {
         return new Intent(context, AddMeetingActivity.class);
     }
@@ -49,8 +44,8 @@ public class AddMeetingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mActivtyAddMeetingBinding = ActivtyAddMeetingBinding.inflate(getLayoutInflater());
-        View view = mActivtyAddMeetingBinding.getRoot();
+        mActivityAddMeetingBinding = ActivityAddMeetingBinding.inflate(getLayoutInflater());
+        View view = mActivityAddMeetingBinding.getRoot();
         setContentView(view);
 
         mAddMeetingViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this)).get(AddMeetingViewModel.class);
@@ -59,7 +54,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         ArrayAdapter roomSelectionAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, roomArray);
 
         roomSelectionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mActivtyAddMeetingBinding.addMeetingRoomSelectionSpinner.setAdapter(roomSelectionAdapter);
+        mActivityAddMeetingBinding.addMeetingRoomSelectionSpinner.setAdapter(roomSelectionAdapter);
 
         bindAddButton();
     }
@@ -74,7 +69,7 @@ public class AddMeetingActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int selectHours, int selectMins) {
                 hours = selectHours;
                 minutes = selectMins;
-                mActivtyAddMeetingBinding.addMeetingTimePickerBtn.setText(String.format(Locale.getDefault(),"%02d:%02d",hours, minutes));
+                mActivityAddMeetingBinding.addMeetingTimePickerBtn.setText(String.format(Locale.getDefault(),"%02d:%02d",hours, minutes));
                 isTimeSelected = true;
             }
         };
@@ -94,7 +89,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                year = selectYear;
                month = selectMonth + 1;
                day = selectDay;
-               mActivtyAddMeetingBinding.addMeetingDatePickerBtn.setText(String.format(Locale.getDefault(),"%02d/%02d/%04d", day,month,year));
+               mActivityAddMeetingBinding.addMeetingDatePickerBtn.setText(String.format(Locale.getDefault(),"%02d/%02d/%04d", day,month,year));
                isDateSelected = true;
            }
        };
@@ -109,17 +104,17 @@ public class AddMeetingActivity extends AppCompatActivity {
      * creation of a new meeting
      */
     private void bindAddButton(){
-        mActivtyAddMeetingBinding.addMeetingAddButton.setOnClickListener(new View.OnClickListener() {
+        mActivityAddMeetingBinding.addMeetingAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String subject = mActivtyAddMeetingBinding.addMeetingSubjectTextInput.getText().toString();
-                String participants = mActivtyAddMeetingBinding.addMeetingPerticipantsTextInput.getText().toString();
+                String subject = mActivityAddMeetingBinding.addMeetingSubjectTextInput.getText().toString();
+                String participants = mActivityAddMeetingBinding.addMeetingPerticipantsTextInput.getText().toString();
                 //Data Validation
                 if(subject.isEmpty()||participants.isEmpty()||!isTimeSelected||!isDateSelected) Toast.makeText(getApplicationContext(), "formulaire pas remplis", Toast.LENGTH_LONG).show();
                 else {
                     String emailValidationMessage = mAddMeetingViewModel.onAddButtonClicked(
                             LocalDateTime.of(year,month,day,hours, minutes),
-                            mActivtyAddMeetingBinding.addMeetingRoomSelectionSpinner.getSelectedItemPosition(),
+                            mActivityAddMeetingBinding.addMeetingRoomSelectionSpinner.getSelectedItemPosition(),
                             subject,
                             participants
                     );

@@ -28,7 +28,7 @@ public class Meeting {
      * Constructor
      * @param id unique number given to each meeting
      * @param date an object of type LocaleDateTime used to store the date
-     * @param location a Room obejct used to store the location of the meeting
+     * @param location a Room object used to store the location of the meeting
      * @param subject what the meeting will be about
      * @param participants a list of email addresses of the participants
      */
@@ -77,7 +77,7 @@ public class Meeting {
     /**
      * Method used to check if a meeting is soon. It looks at the date of the meeting
      * and checks if it is after now and before the end parameter
-     * @param end the uperbound of the range check to find out if the meeting is soon.
+     * @param end the upperbound of the range check to find out if the meeting is soon.
      * @return true if the meeting is in between the range of now and end
      */
     public boolean checkIfSoon(LocalDateTime end){
@@ -110,7 +110,7 @@ public class Meeting {
     }
 
     /**
-     * Checks the list of participants to see if there email adresses are in the correct format
+     * Checks the list of participants to see if there email addresses are in the correct format
      * @return if the emails are "valid" or the error message
      */
     public String validateEmailList(){
