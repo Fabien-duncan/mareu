@@ -73,7 +73,7 @@ public class MeetingRespositoryTest{
         assertEquals(9, meetingRepository.getAllMeetings().getValue().size());
     }
     @Test
-    public void addingMeetingWithInvalidPaticipantsShouldBeRegected(){
+    public void addingMeetingWithInvalidParticipantsShouldBeRejected(){
         meetingRepository.addMeeting(
                 LocalDateTime.of(2022,2,12,18,0),
                 new Room(105,6),
