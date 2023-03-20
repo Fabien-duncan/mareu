@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">mareu</string>
+    <string name="add_meeting">Créer une réunion</string>
+    <string name="save">enregistrer</string>
+    <string name="new_meeting_tytle">Nouvelle Réunion</string>
+    <string name="raison_meeting">Raison</string>
+    <string name="time_picker">sélectionner l\'heure</string>
+    <string name="date_picker">sélectionner la date</string>
+    <string name="room_picker">sélectionner la salle</string>
+    <string name="confirm">Valider</string>
+    <string name="hours">heures</string>
+    <string name="minutes">minutes</string>
+    <string name="filter_type_select">sélectionner le type de filtre. Filtrer par:</string>
+    <string name="date">Date</string>
+    <string name="hour">Heure</string>
+    <string name="filter_sort_options">option filtrer/trier</string>
+    <string name="cancel_filter_sort">suprimer filtre/tri</string>
+    <string name="filter">filtrer</string>
+    <string name="filter_by_date_time">par date/heures</string>
+    <string name="filter_by_room">par salles</string>
+    <string name="sort">trier</string>
+    <string name="sort_by_date_time">par heures</string>
+    <string name="sort_by_room">par salles</string>
 </resources>

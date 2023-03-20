@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:minWidth="300dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_meeting_tytle"
+            android:textSize="32sp"
+            android:textAlignment="center" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addMeeting_subject_textInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/raison_meeting"
+                android:textColorHint="#FFFFFF" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/addMeeting_timePicker_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="popTimePicker"
+            android:text="@string/time_picker"
+            android:layout_margin="8dp"/>
+        <Button
+            android:id="@+id/addMeeting_datePicker_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="popDatePicker"
+            android:text="@string/date_picker"
+            android:layout_margin="8dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/room_picker"
+            android:textSize="16sp"
+            android:contentDescription="@string/room_picker"/>
+
+        <Spinner
+            android:id="@+id/addMeeting_roomSelection_Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/room_picker"
+            android:minHeight="48dp"
+            android:textSize="16sp"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addMeeting_perticipants_textInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="participants (séparer les adresses mail par une virgule" />
+        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addMeeting_add_button"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="true"
+        android:text="@string/save"
+        android:contentDescription="@string/save"
+        android:layout_marginBottom="8dp"
+        android:layout_gravity="center"/>
+</LinearLayout>

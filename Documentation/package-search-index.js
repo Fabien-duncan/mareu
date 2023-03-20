@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.example.mareu"},{"l":"com.example.mareu.adapters"},{"l":"com.example.mareu.data"},{"l":"com.example.mareu.injection"},{"l":"com.example.mareu.models"},{"l":"com.example.mareu.repositories"},{"l":"com.example.mareu.ui"},{"l":"com.example.mareu.viewmodels"}]
